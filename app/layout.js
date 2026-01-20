@@ -1,27 +1,37 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const sfPro = localFont({
+  src: [
+    {
+      path: "../public/fonts/SF-Pro-Display-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/SF-Pro-Display-Medium.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/SF-Pro-Display-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-sf-pro",
 });
 
 export const metadata = {
-  title: "VOLT - Urban & Action Sports Apparel",
-  description: "Shop the latest urban and action sports collection - BMX, Skateboarding, and Urban wear",
+  title: "FLUX - Urban & Action Sports Apparel",
+  description:
+    "Shop the latest urban and action sports collection - BMX, Skateboarding, and Urban wear",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${sfPro.variable} antialiased`}>
         {children}
       </body>
     </html>

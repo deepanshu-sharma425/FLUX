@@ -6,9 +6,14 @@ export default function Home() {
 
 
   return (
-    <div className="bg-red-500">
-      heejbfdws
+    <main style={{ padding: "40px" }}>
+      <h1 style={{ fontSize: "48px",  }}>
+        FLUX – SF Pro Test
+      </h1>
+      <p>jhfeahsbcj,dsxz</p>
       
-    </div>
+      </main>
+
+      
   );
 }
