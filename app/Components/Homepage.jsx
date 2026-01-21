@@ -7,12 +7,17 @@ const Homepage = () => {
   return (
     <section className="relative overflow-hidden font-[SF_Pro_Display] min-h-[100svh]">
 
-      {/* Background FLUX text */}
+      {/* Background FLUX text (LOCKED BEHIND IMAGE ZONE) */}
       <h1
         className="
-          absolute inset-0 flex items-center justify-between 
+          absolute 
+          /* Updated Positioning: Moves text up behind the models' heads/torsos */
+          top-[10%] sm:top-[12%] md:top-[18%]
+          left-0 right-0
+          flex justify-between
           px-6 sm:px-10 md:px-20
-          text-[6rem] sm:text-[10rem] md:text-[18rem] lg:text-[22rem]
+          /* Font Sizes */
+          text-[5rem] sm:text-[10rem] md:text-[18rem] lg:text-[22rem]
           font-black text-orange-500/90
           select-none pointer-events-none z-0
         "
@@ -26,7 +31,7 @@ const Homepage = () => {
       {/* Main content */}
       <div
         className="
-          relative z-20 flex flex-col items-center justify-start
+          relative z-20 flex flex-col items-center
           min-h-[100svh]
           pt-16 sm:pt-24 md:pt-32
           px-4
@@ -50,20 +55,22 @@ const Homepage = () => {
           priority
         />
 
-        {/* Text + CTA */}
-        <div className="mt-5 sm:mt-8 md:mt-10 flex flex-col items-center gap-3 text-center px-2">
+        {/* Text */}
+        <div className="mt-6 sm:mt-8 text-center">
           <h2 className="text-lg sm:text-xl md:text-3xl font-extrabold tracking-wide">
             WINTER COLLECTION DROP
           </h2>
 
-          <p className="text-[0.65rem] sm:text-xs md:text-sm tracking-[0.25em] opacity-70 font-medium">
+          <p className="mt-2 text-[0.65rem] sm:text-xs md:text-sm tracking-[0.25em] opacity-70 font-medium">
             UNITED IN URBAN
           </p>
+        </div>
 
-          {/* CTA */}
+        {/* CTA — GUARDED ZONE */}
+        <div className="mt-6 sm:mt-8">
           <div
             className="
-              group mt-3 flex items-center justify-center gap-2
+              group flex items-center justify-center gap-2
               px-5 py-2.5 sm:px-6 sm:py-3
               rounded-full
               bg-orange-400
