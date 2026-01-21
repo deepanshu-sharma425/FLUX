@@ -1,10 +1,13 @@
 'use client';
+
 import { ArrowBigRight } from 'lucide-react';
 import Image from 'next/image';
 
 const Homepage = () => {
   return (
-    <section className="relative min-h-screen overflow-hidden font-[SF_Pro_Display]">
+    <section className="relative overflow-hidden font-[SF_Pro_Display] min-h-[100svh]">
+
+      {/* Background FLUX text */}
       <h1
         className="
           absolute inset-0 flex items-center justify-between 
@@ -19,14 +22,17 @@ const Homepage = () => {
         <span>U</span>
         <span>X</span>
       </h1>
+
+      {/* Main content */}
       <div
         className="
-          relative z-20 flex flex-col items-center justify-center
-          min-h-screen
-          pt-24 sm:pt-28 md:pt-32
+          relative z-20 flex flex-col items-center justify-start
+          min-h-[100svh]
+          pt-16 sm:pt-24 md:pt-32
           px-4
         "
       >
+        {/* Image */}
         <Image
           src="/Asset/hero.png"
           alt="Flux Collection"
@@ -34,7 +40,7 @@ const Homepage = () => {
           height={900}
           className="
             w-full
-            max-w-[320px]
+            max-w-[280px]
             sm:max-w-[420px]
             md:max-w-[650px]
             lg:max-w-[900px]
@@ -43,44 +49,38 @@ const Homepage = () => {
           "
           priority
         />
-        <div className="mt-6 flex flex-col gap-2 sm:mt-8 md:mt-10 text-center px-2">
-          <h2
-            className="text-lg sm:text-xl md:text-3xl font-extrabold  tracking-wide font-stretch-50%
-            "
-          >
+
+        {/* Text + CTA */}
+        <div className="mt-5 sm:mt-8 md:mt-10 flex flex-col items-center gap-3 text-center px-2">
+          <h2 className="text-lg sm:text-xl md:text-3xl font-extrabold tracking-wide">
             WINTER COLLECTION DROP
           </h2>
-          <p
-            className="
-              mt-2 text-[0.65rem] sm:text-xs md:text-sm
-              tracking-[0.25em] opacity-70 font-medium"
-          >
+
+          <p className="text-[0.65rem] sm:text-xs md:text-sm tracking-[0.25em] opacity-70 font-medium">
             UNITED IN URBAN
           </p>
-        <div
-  className="
-    group flex items-center justify-center gap-2
-    px-6 py-3 rounded-full
-    bg-orange-400
-    hover:bg-zinc-900
-    transition-all duration-300
-    cursor-pointer
-  "
->
-  <button className="text-black group-hover:text-white font-medium tracking-wide transition-colors duration-300">
-    Shop the Winter Collection
-  </button>
-  <ArrowBigRight className="text-black group-hover:text-white w-5 h-5 mt-[2px] transition-colors duration-300" />
-</div>
 
-      
+          {/* CTA */}
+          <div
+            className="
+              group mt-3 flex items-center justify-center gap-2
+              px-5 py-2.5 sm:px-6 sm:py-3
+              rounded-full
+              bg-orange-400
+              hover:bg-zinc-900
+              transition-all duration-300
+              cursor-pointer
+            "
+          >
+            <button className="text-xs sm:text-sm md:text-base text-black group-hover:text-white font-medium tracking-wide transition-colors duration-300 whitespace-nowrap">
+              Shop the Winter Collection
+            </button>
+            <ArrowBigRight className="w-4 h-4 sm:w-5 sm:h-5 text-black group-hover:text-white transition-colors duration-300 group-hover:translate-x-1" />
+          </div>
         </div>
       </div>
-      
-
     </section>
   );
 };
-
 
 export default Homepage;

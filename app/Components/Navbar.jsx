@@ -8,11 +8,21 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="absolute top-0 left-0 z-50 w-full flex items-center justify-between 
-                      px-4 sm:px-6 md:px-12 py-4 sm:py-5 md:py-6">
+      {/* Navbar */}
+      <nav
+        className="
+          absolute top-0 left-0 z-50 w-full
+          flex items-center justify-between
+          px-4 sm:px-6 md:px-12
+          py-3 sm:py-4 md:py-6
+        "
+      >
+        {/* Logo */}
         <h2 className="font-extrabold text-xl sm:text-2xl md:text-3xl">
           FLUX
         </h2>
+
+        {/* Desktop Menu */}
         <div className="hidden md:flex gap-6">
           {["BMX Rider", "Skateboarders", "Urban", "Powerups"].map(item => (
             <p
@@ -23,26 +33,35 @@ const Navbar = () => {
             </p>
           ))}
         </div>
+
+        {/* Icons */}
         <div className="flex items-center gap-3 sm:gap-4">
           <Search className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
           <ShoppingCartIcon className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
           <User2 className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
+
+          {/* Hamburger (Mobile) */}
           <button
             onClick={() => setOpen(true)}
             className="md:hidden"
           >
-            <Menu className="w-6 h-6 cursor-pointer" />
+            <Menu className="w-6 h-6" />
           </button>
         </div>
       </nav>
+
+      {/* Mobile Popup Menu */}
       {open && (
         <div className="fixed inset-0 z-50 bg-[#f0e6d9] flex flex-col">
+          {/* Top */}
           <div className="flex items-center justify-between px-6 py-5">
             <h2 className="font-extrabold text-2xl">FLUX</h2>
             <button onClick={() => setOpen(false)}>
               <X className="w-6 h-6" />
             </button>
           </div>
+
+          {/* Menu */}
           <div className="flex flex-col items-center justify-center flex-1 gap-8">
             {["BMX Rider", "Skateboarders", "Urban", "Powerups"].map(item => (
               <p
