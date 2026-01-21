@@ -1,12 +1,10 @@
 'use client';
-
+import { ArrowBigRight } from 'lucide-react';
 import Image from 'next/image';
 
 const Homepage = () => {
   return (
     <section className="relative min-h-screen overflow-hidden font-[SF_Pro_Display]">
-
-      {/* Background FLUX text */}
       <h1
         className="
           absolute inset-0 flex items-center justify-between 
@@ -21,8 +19,6 @@ const Homepage = () => {
         <span>U</span>
         <span>X</span>
       </h1>
-
-      {/* Image + Caption Wrapper */}
       <div
         className="
           relative z-20 flex flex-col items-center justify-center
@@ -31,7 +27,6 @@ const Homepage = () => {
           px-4
         "
       >
-        {/* Center Image */}
         <Image
           src="/Asset/hero.png"
           alt="Flux Collection"
@@ -48,13 +43,9 @@ const Homepage = () => {
           "
           priority
         />
-
-        {/* Caption BELOW image */}
-        <div className="mt-6 sm:mt-8 md:mt-10 text-center px-2">
+        <div className="mt-6 flex flex-col gap-2 sm:mt-8 md:mt-10 text-center px-2">
           <h2
-            className="
-              text-lg sm:text-xl md:text-3xl
-              font-bold tracking-wide
+            className="text-lg sm:text-xl md:text-3xl font-extrabold  tracking-wide font-stretch-50%
             "
           >
             WINTER COLLECTION DROP
@@ -62,16 +53,34 @@ const Homepage = () => {
           <p
             className="
               mt-2 text-[0.65rem] sm:text-xs md:text-sm
-              tracking-[0.25em] opacity-70
-            "
+              tracking-[0.25em] opacity-70 font-medium"
           >
             UNITED IN URBAN
           </p>
+        <div
+  className="
+    group flex items-center justify-center gap-2
+    px-6 py-3 rounded-full
+    bg-orange-400
+    hover:bg-zinc-900
+    transition-all duration-300
+    cursor-pointer
+  "
+>
+  <button className="text-black group-hover:text-white font-medium tracking-wide transition-colors duration-300">
+    Shop the Winter Collection
+  </button>
+  <ArrowBigRight className="text-black group-hover:text-white w-5 h-5 mt-[2px] transition-colors duration-300" />
+</div>
+
+      
         </div>
       </div>
+      
 
     </section>
   );
 };
+
 
 export default Homepage;
