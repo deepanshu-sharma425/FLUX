@@ -22,6 +22,10 @@ const sfPro = localFont({
   variable: "--font-sf-pro",
 });
 
+
+
+
+
 export const metadata = {
   title: "FLUX - Urban & Action Sports Apparel",
   description:
