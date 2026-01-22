@@ -94,7 +94,8 @@ const Homepage = () => {
       <div key={e.id}>
         <h1>{e.name}</h1>
         <h1>{e.price}</h1>
-        {/* <Image src={e.image} alt={e.name} width={500} height={500}/> */}
+        <Image src={e.image} alt={e.name} width={500} height={500}/>
+        <p>{e.color}</p>
       </div>)
     }       )}
     </>

@@ -1,190 +1,203 @@
 const products = [
+
   {
     id: 1,
     name: "Flux Core Hoodie",
     category: "Hoodies",
-    description: "Premium heavyweight hoodie built for urban winters.",
+    description: "Premium everyday hoodie for street wear.",
     sizes: ["S", "M", "L", "XL"],
     price: 3499,
     discount: 20,
     finalPrice: 2799,
     image: "/Asset/hoddie1.png",
+    color:"Navy Blue",
     details: {
       material: "Cotton Fleece",
       fit: "Regular",
-      color: "Black"
     }
   },
   {
     id: 2,
     name: "Flux Shadow Hoodie",
     category: "Hoodies",
-    description: "Minimal hoodie with bold Flux branding.",
+    description: "Minimal oversized hoodie with clean branding.",
     sizes: ["M", "L", "XL"],
     price: 3299,
     discount: 15,
     finalPrice: 2804,
-    image: "/Asset/hoodie2.png",
+    image: "/Asset/hoddie2.png",
+    color:"White",
     details: {
       material: "Cotton Blend",
       fit: "Oversized",
-      color: "Charcoal"
     }
   },
   {
     id: 3,
     name: "Flux Urban Hoodie",
     category: "Hoodies",
-    description: "Street-ready hoodie with a soft interior.",
+    description: "Street-ready hoodie with soft inner lining.",
     sizes: ["S", "M", "L"],
     price: 3199,
     discount: 10,
     finalPrice: 2879,
-    image: "/Asset/hoodie3.png",
+    image: "/Asset/hoddie3.png",
+    color:"Off-White",
     details: {
       material: "French Terry",
       fit: "Regular",
-      color: "Olive"
     }
   },
 
-  // 👕 T-SHIRTS
+
   {
     id: 4,
-    name: "Flux Essential Tee",
-    category: "T-Shirts",
-    description: "Everyday tee with breathable fabric.",
+    name: "Flux Casual Shirt",
+    category: "Shirts",
+    description: "Relaxed-fit casual shirt for daily wear.",
     sizes: ["S", "M", "L", "XL"],
     price: 1499,
     discount: 20,
     finalPrice: 1199,
-    image: "/Asset/flux-tee-1.png",
+    image: "/Asset/cshirt1.png",
+    color:"Light Blue",
     details: {
-      material: "100% Cotton",
-      fit: "Slim",
-      color: "White"
+      material: "Cotton Poplin",
+      fit: "Regular",
     }
   },
   {
     id: 5,
-    name: "Flux Street Tee",
-    category: "T-Shirts",
-    description: "Urban graphic tee with bold typography.",
+    name: "Flux Striped Casual Shirt",
+    category: "Shirts",
+    description: "Lightweight striped shirt with a clean look.",
     sizes: ["M", "L", "XL"],
     price: 1699,
     discount: 15,
     finalPrice: 1444,
-    image: "/Asset/flux-tee-2.png",
+    color:"Checked Pattern",
+    image: "/Asset/cshirt2.png",
     details: {
-      material: "Cotton Jersey",
-      fit: "Regular",
-      color: "Black"
+      material: "Cotton Blend",
+      fit: "Slim",
     }
   },
 
-  // 👖 JOGGERS
+
   {
     id: 6,
-    name: "Flux Motion Joggers",
-    category: "Joggers",
-    description: "Flexible joggers designed for movement.",
+    name: "Flux Full Sleeve Shirt",
+    category: "Shirts",
+    description: "Sharp full-sleeve shirt for semi-formal wear.",
     sizes: ["S", "M", "L", "XL"],
     price: 2999,
     discount: 20,
     finalPrice: 2399,
-    image: "/Asset/flux-jogger-1.png",
+    image: "/Asset/fshirt1.png",
+    color:"Navy Blue Stripe",
     details: {
-      material: "Poly Cotton",
-      fit: "Tapered",
-      color: "Black"
+      material: "Premium Cotton",
+      fit: "Tailored",
     }
   },
   {
     id: 7,
-    name: "Flux Urban Joggers",
-    category: "Joggers",
-    description: "Everyday joggers with zipper pockets.",
+    name: "Flux Classic Full Sleeve Shirt",
+    category: "Shirts",
+    description: "Classic design suitable for office and casual use.",
     sizes: ["M", "L", "XL"],
     price: 2799,
     discount: 10,
     finalPrice: 2519,
-    image: "/Asset/flux-jogger-2.png",
+    image: "/Asset/fshirt2.png",
+    color:"White",
     details: {
-      material: "Cotton Blend",
+      material: "Cotton Twill",
       fit: "Regular",
-      color: "Grey"
     }
   },
-
-
   {
     id: 8,
-    name: "Flux Snapback Cap",
-    category: "Caps",
-    description: "Classic snapback with embroidered logo.",
-    sizes: ["Free Size"],
-    price: 1299,
-    discount: 15,
-    finalPrice: 1104,
-    image: "/Asset/flux-cap-1.png",
+    name: "Flux Utility Cargo",
+    category: "Joggers",
+    description: "Functional cargo pants with multiple pockets.",
+    sizes: ["S", "M", "L", "XL"],
+    price: 2999,
+    discount: 20,
+    finalPrice: 2399,
+    image: "/Asset/cargo1.png",
+    color:"Cream",
     details: {
-      material: "Canvas",
-      fit: "Adjustable",
-      color: "Black"
+      material: "Cotton Twill",
+      fit: "Relaxed",
     }
   },
   {
     id: 9,
-    name: "Flux Urban Cap",
+    name: "Flux Street Cargo",
+    category: "Joggers",
+    description: "Street-style cargo built for comfort.",
+    sizes: ["M", "L", "XL"],
+    price: 2799,
+    discount: 10,
+    finalPrice: 2519,
+    image: "/Asset/cargo2.png",
+    color:"Navy Blue",
+    details: {
+      material: "Poly Cotton",
+      fit: "Tapered",
+    }
+  },
+
+  // 🧢 CAPS
+  {
+    id: 10,
+    name: "Flux Snapback Cap",
     category: "Caps",
-    description: "Minimal cap for daily wear.",
+    description: "Structured snapback with minimalist branding.",
+    sizes: ["Free Size"],
+    price: 1299,
+    discount: 15,
+    finalPrice: 1104,
+    color:"White",
+    image: "/Asset/cap1.png",
+    details: {
+      material: "Canvas",
+      fit: "Adjustable",
+    }
+  },
+  {
+    id: 11,
+    name: "Flux Daily Cap",
+    category: "Caps",
+    description: "Lightweight cap for everyday use.",
     sizes: ["Free Size"],
     price: 1199,
     discount: 10,
     finalPrice: 1079,
-    image: "/Asset/flux-cap-2.png",
+    color:"Navy Blue",
+    image: "/Asset/cap2.png",
     details: {
       material: "Cotton",
       fit: "Adjustable",
-      color: "Beige"
     }
   },
-
- 
   {
-    id: 10,
+    id: 12,
     name: "Flux Street Sneakers",
     category: "Footwear",
-    description: "Lightweight sneakers for everyday comfort.",
+    description: "Comfort-focused sneakers for daily wear.",
     sizes: ["7", "8", "9", "10", "11"],
     price: 4999,
     discount: 25,
     finalPrice: 3749,
-    image: "/Asset/flux-shoes-1.png",
+    image: "/Asset/shoes1.png",
+    color:"White",
     details: {
       material: "Mesh + Rubber",
       fit: "Standard",
-      color: "White"
     }
   },
-
-
-  {
-    id: 11,
-    name: "Flux Utility Backpack",
-    category: "Accessories",
-    description: "Spacious backpack for urban travel.",
-    sizes: ["Free Size"],
-    price: 3499,
-    discount: 20,
-    finalPrice: 2799,
-    image: "/Asset/flux-bag-1.png",
-    details: {
-      material: "Nylon",
-      capacity: "22L",
-      color: "Black"
-    }
-  }
 ];
 
 export default products;
