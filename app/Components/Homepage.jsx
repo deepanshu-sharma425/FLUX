@@ -2,12 +2,14 @@
 
 import { ArrowBigRight } from 'lucide-react';
 import Image from 'next/image';
-
+import products from './Asset';
 const Homepage = () => {
+  
   return (
+    <>
     <section className="relative overflow-hidden font-[SF_Pro_Display] min-h-[100svh]">
 
-      {/* Background FLUX text (LOCKED BEHIND IMAGE ZONE) */}
+
       <h1
         className="
           absolute 
@@ -28,7 +30,7 @@ const Homepage = () => {
         <span>X</span>
       </h1>
 
-      {/* Main content */}
+
       <div
         className="
           relative z-20 flex flex-col items-center
@@ -87,6 +89,15 @@ const Homepage = () => {
         </div>
       </div>
     </section>
+    {products.map((e)=>{
+      return(
+      <div key={e.id}>
+        <h1>{e.name}</h1>
+        <h1>{e.price}</h1>
+        {/* <Image src={e.image} alt={e.name} width={500} height={500}/> */}
+      </div>)
+    }       )}
+    </>
   );
 };
 
