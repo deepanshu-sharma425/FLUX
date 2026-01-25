@@ -2,7 +2,7 @@
 
 import { ArrowBigRight } from 'lucide-react';
 import Image from 'next/image';
-import products from './Asset';
+
 const Homepage = () => {
   
   return (
@@ -39,7 +39,6 @@ const Homepage = () => {
           px-4
         "
       >
-        {/* Image */}
         <Image
           src="/Asset/hero.png"
           alt="Flux Collection"
@@ -57,7 +56,7 @@ const Homepage = () => {
           priority
         />
 
-        {/* Text */}
+
         <div className="mt-6 sm:mt-8 text-center">
           <h2 className="text-lg sm:text-xl md:text-3xl font-extrabold tracking-wide">
             WINTER COLLECTION DROP
@@ -67,8 +66,6 @@ const Homepage = () => {
             UNITED IN URBAN
           </p>
         </div>
-
-        {/* CTA — GUARDED ZONE */}
         <div className="mt-6 sm:mt-8">
           <div
             className="
@@ -89,15 +86,9 @@ const Homepage = () => {
         </div>
       </div>
     </section>
-    {products.map((e)=>{
-      return(
-      <div key={e.id}>
-        <h1>{e.name}</h1>
-        <h1>{e.price}</h1>
-        <Image src={e.image} alt={e.name} width={500} height={500}/>
-        <p>{e.color}</p>
-      </div>)
-    }       )}
+
+
+    
     </>
   );
 };
