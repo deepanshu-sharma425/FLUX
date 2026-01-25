@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -85,6 +85,7 @@ const Filtercorusel = () => {
         {filteredProducts.length > 0 ? (
           <Slider {...settings}>
             {filteredProducts.map((product) => (
+              <Link href={`Cloth/${product.id}`} key={product.id}>
               <div key={product.id} className="px-2">
                 <div className="group relative bg-[#f2efe9] rounded-xl overflow-hidden">
 
@@ -93,7 +94,7 @@ const Filtercorusel = () => {
                     <Heart className="w-4 h-4 text-black" />
                   </button>
 
-                  {/* Image */}
+
                   <div className="relative h-[260px] sm:h-[300px] md:h-[340px]">
                     <Image
                       src={product.image}
@@ -128,6 +129,8 @@ const Filtercorusel = () => {
 
                 </div>
               </div>
+              </Link>
+              
             ))}
           </Slider>
         ) : (

@@ -1,9 +1,17 @@
 'use client';
-
+import Link from "next/link";
 import { useState } from "react";
 import { Search, ShoppingCartIcon, User2, Menu, X } from "lucide-react";
 
 const Navbar = () => {
+
+  const categories = [
+    { label: "All", href: "/AllCloth" },
+    { label: "Skateboarders", href: "/category/skateboarders" },
+    { label: "Urban", href: "/category/urban" },
+    { label: "Powerups", href: "/category/powerups" },
+  ];
+  
   const [open, setOpen] = useState(false);
 
   return (
@@ -16,19 +24,20 @@ const Navbar = () => {
           py-3 sm:py-4 md:py-6
         "
       >
-        <h2 className="font-extrabold text-xl sm:text-2xl md:text-3xl">
+        <Link href={'/'}><h2 className="font-extrabold text-xl sm:text-2xl md:text-3xl">
           FLUX
-        </h2>
+        </h2></Link>
 
         <div className="hidden md:flex gap-6">
-          {["BMX Rider", "Skateboarders", "Urban", "Powerups"].map(item => (
-            <p
-              key={item}
-              className="font-mono text-lg cursor-pointer hover:opacity-70 transition"
-            >
-              {item}
-            </p>
-          ))}
+          {categories.map((item) => (
+        <Link
+          key={item.label}
+          href={item.href}
+          className="font-mono text-lg cursor-pointer hover:opacity-70 transition"
+        >
+          {item.label}
+        </Link>
+      ))}
         </div>
         <div className="flex items-center gap-3 sm:gap-4">
           <Search className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />

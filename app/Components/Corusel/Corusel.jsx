@@ -7,6 +7,7 @@ import products from "../Asset";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
 
 const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
@@ -38,7 +39,7 @@ const Corusel = () => {
         breakpoint: 640, // Mobile
         settings: {
           slidesToShow: 1,
-          arrows: false, // 👈 mobile = swipe only
+          arrows: false, 
         },
       },
     ],
@@ -50,6 +51,8 @@ const Corusel = () => {
 
         <Slider {...settings}>
           {products.map((product) => (
+            <Link href={`Cloth/${product.id}`} key={product.id}>
+
             <div key={product.id} className="px-1 sm:px-2">
               <div className="group relative overflow-hidden bg-[#f2efe9] rounded-xl">
                 <div className="relative h-[300px] sm:h-[420px] md:h-[520px]">
@@ -77,6 +80,7 @@ const Corusel = () => {
 
               </div>
             </div>
+            </Link>
           ))}
         </Slider>
 
