@@ -8,6 +8,7 @@ import Filtercorusel from "./Corusel/Filtercorusel";
 import Story from "./Story";
 import Login from "./Login/Login";
 import Signup from "./Corusel/Signup/Signup";
+import HomeFooter from "./Footer/HomeFotter";
 
 const Homepage = () => {
   
@@ -112,8 +113,7 @@ const Homepage = () => {
       <Corusel />
       <Filtercorusel/>
       <Story/>
-      <Login/>
-      <Signup/>
+      <HomeFooter/>
     </>
   );
 };

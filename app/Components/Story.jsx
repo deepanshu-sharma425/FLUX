@@ -2,36 +2,48 @@ import Image from "next/image";
 
 const Story = () => {
   return (
-    <section className="relative w-full h-[70vh] mt-10">
-  
-  {/* Background Image */}
-  <Image
-    src="/storypage.png"
-    alt="Flux Story"
-    fill
-    priority
-    className="object-cover"
-  />
+    <section className="relative isolate w-full h-[70vh] mt-10">
+      <Image
+        src="/storypage.png"
+        alt="Flux Story"
+        fill
+        priority
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-black/60" />
+      <div className="relative z-10 flex items-center h-full px-6 sm:px-10 md:px-20 font-mono">
+        <div className="max-w-4xl text-white">
 
-  {/* Overlay */}
-  <div className="absolute inset-0 " />
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-widest">
+            Built From the Streets
+          </h1>
 
-  {/* Text Wrapper (FIX HERE 👇) */}
-  <div className="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
-    
-    <div className="max-w-4xl text-white">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-widest">
-        Built From the Streets
-      </h1>
+          <p className="mt-6 text-sm sm:text-base text-gray-200 leading-relaxed">
+            FLUX was born from movement — from the noise of the city, the grind
+            of concrete streets, and the people who choose momentum over comfort.
+            Every piece we create reflects raw energy, resilience, and everyday utility.
+          </p>
 
-      <p className="mt-6 text-sm sm:text-base text-gray-200 leading-relaxed">
-        Designed for movement, crafted for durability, and inspired by
-        the raw energy of urban culture.
-      </p>
-    </div>
+          <p className="mt-4 text-sm sm:text-base text-gray-300 leading-relaxed">
+            Designed with purpose and built for durability, our clothing is made
+            to move with you. From early mornings to late nights, from quiet streets
+            to crowded cities, FLUX adapts without losing form or function.
+          </p>
 
-  </div>
-</section>
+          <p className="mt-4 text-sm sm:text-base text-gray-300 leading-relaxed">
+            This isn’t seasonal fashion or fast trends. It’s everyday wear,
+            refined through motion, tested in real life, and shaped by streets
+            that never slow down.
+          </p>
+
+          <span className="block mt-10 text-lg tracking-[0.4em] font-semibold">
+            FLUX
+          </span>
+
+        </div>
+      </div>
+
+    </section>
   );
 };
 
