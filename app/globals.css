@@ -59,7 +59,7 @@ body {
 .slick-next {
   width: 48px;
   height: 48px;
-  background: #111111;            /* solid dark background */
+  background: #111111;        
   border-radius: 9999px;
   z-index: 30;
   display: flex !important;

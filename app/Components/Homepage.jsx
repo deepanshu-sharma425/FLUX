@@ -1,13 +1,17 @@
 "use client";
 
 import { ArrowBigRight } from "lucide-react";
+// import { useState } from "react";
 import Image from "next/image";
 import Corusel from "./Corusel/Corusel";
+import Filtercorusel from "./Corusel/Filtercorusel";
 
 const Homepage = () => {
+  
+
   return (
     <>
-      {/* HERO SECTION */}
+
       <section
         className="
           relative overflow-hidden font-[SF_Pro_Display]
@@ -15,7 +19,7 @@ const Homepage = () => {
           sm:min-h-[100svh]
         "
       >
-        {/* BIG BACKGROUND TEXT (HIDDEN ON MOBILE) */}
+
         <h1
           className="
             hidden sm:flex
@@ -35,7 +39,7 @@ const Homepage = () => {
           <span>X</span>
         </h1>
 
-        {/* CONTENT */}
+      
         <div
           className="
             relative z-20
@@ -44,7 +48,7 @@ const Homepage = () => {
             px-4
           "
         >
-          {/* HERO IMAGE */}
+   
           <Image
             src="/Asset/hero.png"
             alt="Flux Collection"
@@ -62,7 +66,7 @@ const Homepage = () => {
             "
           />
 
-          {/* TEXT */}
+
           <div className="mt-5 sm:mt-8 text-center">
             <h2 className="text-base sm:text-xl md:text-3xl font-extrabold tracking-wide">
               WINTER COLLECTION DROP
@@ -73,7 +77,7 @@ const Homepage = () => {
             </p>
           </div>
 
-          {/* CTA */}
+
           <div className="mt-5 sm:mt-8">
             <div
               className="
@@ -102,9 +106,8 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-
-      
       <Corusel />
+      <Filtercorusel/>
     </>
   );
 };

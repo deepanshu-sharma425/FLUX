@@ -1,5 +1,4 @@
 const products = [
-
   {
     id: 1,
     name: "Flux Core Hoodie",
@@ -10,7 +9,9 @@ const products = [
     discount: 20,
     finalPrice: 2799,
     image: "/Asset/hoddie1.png",
-    color:"Navy Blue",
+    color: "Navy Blue",
+    sex: "Unisex",
+    about: "bestsellers",
     details: {
       material: "Cotton Fleece",
       fit: "Regular",
@@ -26,7 +27,9 @@ const products = [
     discount: 15,
     finalPrice: 2804,
     image: "/Asset/hoddie2.png",
-    color:"White",
+    color: "White",
+    sex: "Unisex",
+    about: "latest",
     details: {
       material: "Cotton Blend",
       fit: "Oversized",
@@ -42,13 +45,14 @@ const products = [
     discount: 10,
     finalPrice: 2879,
     image: "/Asset/hoddie3.png",
-    color:"Off-White",
+    color: "Off-White",
+    sex: "Unisex",
+    about: "sale",
     details: {
       material: "French Terry",
       fit: "Regular",
     }
   },
-
 
   {
     id: 4,
@@ -60,7 +64,9 @@ const products = [
     discount: 20,
     finalPrice: 1199,
     image: "/Asset/cshirt1.png",
-    color:"Light Blue",
+    color: "Light Blue",
+    sex: "Male",
+    about: "latest",
     details: {
       material: "Cotton Poplin",
       fit: "Regular",
@@ -75,14 +81,15 @@ const products = [
     price: 1699,
     discount: 15,
     finalPrice: 1444,
-    color:"Checked Pattern",
+    color: "Checked Pattern",
     image: "/Asset/cshirt2.png",
+    sex: "Male",
+    about: "bestsellers",
     details: {
       material: "Cotton Blend",
       fit: "Slim",
     }
   },
-
 
   {
     id: 6,
@@ -94,7 +101,9 @@ const products = [
     discount: 20,
     finalPrice: 2399,
     image: "/Asset/fshirt1.png",
-    color:"Navy Blue Stripe",
+    color: "Navy Blue Stripe",
+    sex: "Male",
+    about: "sale",
     details: {
       material: "Premium Cotton",
       fit: "Tailored",
@@ -110,7 +119,9 @@ const products = [
     discount: 10,
     finalPrice: 2519,
     image: "/Asset/fshirt2.png",
-    color:"White",
+    color: "White",
+    sex: "Male",
+    about: "latest",
     details: {
       material: "Cotton Twill",
       fit: "Regular",
@@ -126,7 +137,9 @@ const products = [
     discount: 20,
     finalPrice: 2399,
     image: "/Asset/cargo1.png",
-    color:"Cream",
+    color: "Cream",
+    sex: "Unisex",
+    about: "bestsellers",
     details: {
       material: "Cotton Twill",
       fit: "Relaxed",
@@ -142,14 +155,15 @@ const products = [
     discount: 10,
     finalPrice: 2519,
     image: "/Asset/cargo2.png",
-    color:"Navy Blue",
+    color: "Navy Blue",
+    sex: "Unisex",
+    about: "sale",
     details: {
       material: "Poly Cotton",
       fit: "Tapered",
     }
   },
 
-  // 🧢 CAPS
   {
     id: 10,
     name: "Flux Snapback Cap",
@@ -159,8 +173,10 @@ const products = [
     price: 1299,
     discount: 15,
     finalPrice: 1104,
-    color:"White",
+    color: "White",
     image: "/Asset/cap1.png",
+    sex: "Unisex",
+    about: "latest",
     details: {
       material: "Canvas",
       fit: "Adjustable",
@@ -175,8 +191,10 @@ const products = [
     price: 1199,
     discount: 10,
     finalPrice: 1079,
-    color:"Navy Blue",
+    color: "Navy Blue",
     image: "/Asset/cap2.png",
+    sex: "Unisex",
+    about: "bestsellers",
     details: {
       material: "Cotton",
       fit: "Adjustable",
@@ -192,7 +210,9 @@ const products = [
     discount: 25,
     finalPrice: 3749,
     image: "/Asset/shoes1.png",
-    color:"White",
+    color: "White",
+    sex: "Male",
+    about: "latest",
     details: {
       material: "Mesh + Rubber",
       fit: "Standard",
