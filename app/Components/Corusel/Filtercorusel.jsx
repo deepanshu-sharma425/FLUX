@@ -20,38 +20,39 @@ const Filtercorusel = () => {
   );
 
   const settings = {
-    dots: false,
-    infinite: false,
-    speed: 600,
-    slidesToScroll: 1,
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToScroll: 1,
+  swipe: true,
+  swipeToSlide: true,
+  arrows: true,
 
-    arrows: true,
-    slidesToShow: 4,
+  slidesToShow: 4, // desktop
 
-    swipe: true,
-    swipeToSlide: true,
-    touchMove: true,
-    draggable: true,
-    cssEase: "ease-out",
+  responsive: [
+    {
+      breakpoint: 1024, // tablet
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 768, // small tablet
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 640, // MOBILE
+      settings: {
+        slidesToShow: 2,   // ✅ THIS FIXES IT
+        arrows: false,     // swipe only
+      },
+    },
+  ],
+};
 
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 3 },
-      },
-      {
-        breakpoint: 768,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 2,
-          arrows: false, 
-        },
-      },
-    ],
-  };
 
   return (
     <section className="bg-[#f6ecdf] py-6 md:py-10">

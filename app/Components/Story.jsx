@@ -2,7 +2,9 @@ import Image from "next/image";
 
 const Story = () => {
   return (
-    <section className="relative isolate w-full h-[70vh] mt-10">
+    <section className="relative isolate w-full min-h-[85vh] sm:min-h-[70vh] mt-10">
+      
+      {/* Background Image */}
       <Image
         src="/storypage.png"
         alt="Flux Story"
@@ -10,8 +12,12 @@ const Story = () => {
         priority
         className="object-cover"
       />
+
+      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/60" />
-      <div className="relative z-10 flex items-center h-full px-6 sm:px-10 md:px-20 font-mono">
+
+      {/* Content */}
+      <div className="relative z-10 flex items-center min-h-[85vh] sm:min-h-[70vh] px-6 sm:px-10 md:px-20 font-mono">
         <div className="max-w-4xl text-white">
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-widest">
@@ -42,7 +48,6 @@ const Story = () => {
 
         </div>
       </div>
-
     </section>
   );
 };
