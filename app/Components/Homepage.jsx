@@ -5,6 +5,9 @@ import { ArrowBigRight } from "lucide-react";
 import Image from "next/image";
 import Corusel from "./Corusel/Corusel";
 import Filtercorusel from "./Corusel/Filtercorusel";
+import Story from "./Story";
+import Login from "./Login/Login";
+import Signup from "./Corusel/Signup/Signup";
 
 const Homepage = () => {
   
@@ -108,6 +111,9 @@ const Homepage = () => {
       </section>
       <Corusel />
       <Filtercorusel/>
+      <Story/>
+      <Login/>
+      <Signup/>
     </>
   );
 };
