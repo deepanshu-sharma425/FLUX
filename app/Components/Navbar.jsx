@@ -62,17 +62,19 @@ const Navbar = () => {
             </button>
           </div>
 
-                <div className="flex flex-col items-center justify-center flex-1 gap-8">
-            {["BMX Rider", "Skateboarders", "Urban", "Powerups"].map(item => (
-              <p
-                key={item}
-                onClick={() => setOpen(false)}
-                className="text-2xl font-mono tracking-wide cursor-pointer hover:opacity-70 transition"
-              >
-                {item}
-              </p>
-            ))}
-          </div>
+            <div className="flex flex-col items-center justify-center flex-1 gap-8">
+  {categories.map((item) => (
+    <Link
+      key={item.label}
+      href={item.href}
+      onClick={() => setOpen(false)}
+      className="text-2xl font-mono tracking-wide cursor-pointer hover:opacity-70 transition"
+    >
+      {item.label}
+    </Link>
+  ))}
+</div>
+
         </div>
       )}
     </>
