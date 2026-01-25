@@ -1,10 +1,10 @@
 "use client";
 
-import Navbar from "../Components/Navbar";
+import Navbar from "@/Components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
-import products from "../Components/Asset";
+import products from "@/Components/Asset";
 
 export default function AllCloth() {
   return (
