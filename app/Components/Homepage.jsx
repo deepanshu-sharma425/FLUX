@@ -7,7 +7,7 @@ import Corusel from "./Corusel/Corusel";
 import Filtercorusel from "./Corusel/Filtercorusel";
 import Story from "./Story";
 import Login from "./login/page";
-import Signup from "./Corusel/Signup/Signup";
+import Signup from "./Signup/page";
 import HomeFooter from "./Footer/HomeFotter";
 
 const Homepage = () => {

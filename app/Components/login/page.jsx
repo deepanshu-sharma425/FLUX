@@ -88,7 +88,7 @@ export default function Login() {
         <div className="mt-6 text-center text-sm text-gray-600">
           Don’t have an account?{" "}
           <Link
-            href="/signup"
+            href="/Components/Signup"
             className="font-semibold text-black hover:underline"
           >
             Sign up
