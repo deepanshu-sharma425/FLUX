@@ -2,38 +2,43 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
+import { useRouter } from "next/navigation"; // this will take us to page after login
 export default function Login() {
-  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const router=useRouter();
   const [error, setError] = useState("");
+  const handleLogin=async(e)=>{
+    e.preventDefault();
+    setLoading(true)
+    setError("")
+    try{
+      const res=await fetch("/api/auth/login",{
+        method:"POST",
+        headers:{"content-type":"application/json"},
+        body:JSON.stringify({email,password})
+        
+      })
+      const data=await res.json()
+      if(!res.ok){
+        setError(data.error )
+        setLoading(false)
+      }
+      router.push("/")
+    }
+    catch(err){
+      setError(err.message)
+    }
+    finally{
+      setLoading(false)
+    }
 
-  const handleLogin = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setError("");
-
-  try {
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message);
-
-    router.push("/");
-  } catch (err) {
-    setError(err.message);
-  } finally {
-    setLoading(false);
   }
-};
+  
+
+  
 
 
   return (
