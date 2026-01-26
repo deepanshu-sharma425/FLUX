@@ -26,7 +26,6 @@ export default async function ProductsPage() {
               background: "#fafafa",
             }}
           >
-            {/* ✅ IMAGE (Google Drive safe) */}
             <img
               src={product.image}
               alt={product.name}
@@ -39,8 +38,6 @@ export default async function ProductsPage() {
                 background: "#f0f0f0",
               }}
             />
-
-            {/* ✅ PRODUCT INFO */}
             <h3 style={{ marginTop: "12px", fontSize: "18px" }}>
               {product.name}
             </h3>

@@ -6,20 +6,17 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model User {
   id       String @id @default(uuid())
   email    String @unique
   name     String
   password String
 }
-
 enum Sex {
   Male
   Female
   Unisex
 }
-
 model Cloth {
   id          Int      @id @default(autoincrement())
   name        String
@@ -42,7 +39,6 @@ model ClothDetails {
   id        Int    @id @default(autoincrement())
   material  String
   fit       String
-
   cloth     Cloth @relation(fields: [clothId], references: [id])
   clothId   Int   @unique
 }

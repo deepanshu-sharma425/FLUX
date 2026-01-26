@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function AdminDashboard() {
-  const [form, setForm] = useState({
+  const initialFormState = {
     name: "",
     category: "",
     description: "",
@@ -16,8 +16,9 @@ export default function AdminDashboard() {
     about: "",
     material: "",
     fit: "",
-  });
+  };
 
+  const [form, setForm] = useState(initialFormState);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(false);
@@ -76,13 +77,15 @@ export default function AdminDashboard() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
+      if (!res.ok) throw new Error(data.message || "Something went wrong");
 
-      setMessage("✅ Cloth added successfully");
+      // ✅ RESET EVERYTHING
+      setForm(initialFormState);
       setImageFile(null);
       setImagePreview("");
+      setMessage("Cloth added successfully ✅");
     } catch (err) {
-      setMessage("❌ " + err.message);
+      setMessage(err.message);
     } finally {
       setLoading(false);
     }
@@ -108,12 +111,25 @@ export default function AdminDashboard() {
         <section>
           <h2 className="section-title">Basic Information</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <input name="name" placeholder="Product name" onChange={handleChange} className="input" />
-            <input name="category" placeholder="Category" onChange={handleChange} className="input" />
+            <input
+              name="name"
+              value={form.name}
+              placeholder="Product name"
+              onChange={handleChange}
+              className="input"
+            />
+            <input
+              name="category"
+              value={form.category}
+              placeholder="Category"
+              onChange={handleChange}
+              className="input"
+            />
           </div>
 
           <textarea
             name="description"
+            value={form.description}
             placeholder="Product description"
             onChange={handleChange}
             className="input mt-6"
@@ -125,9 +141,27 @@ export default function AdminDashboard() {
         <section>
           <h2 className="section-title">Pricing</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <input name="price" placeholder="Price" onChange={handleChange} className="input" />
-            <input name="discount" placeholder="Discount %" onChange={handleChange} className="input" />
-            <input name="finalPrice" placeholder="Final price" onChange={handleChange} className="input" />
+            <input
+              name="price"
+              value={form.price}
+              placeholder="Price"
+              onChange={handleChange}
+              className="input"
+            />
+            <input
+              name="discount"
+              value={form.discount}
+              placeholder="Discount %"
+              onChange={handleChange}
+              className="input"
+            />
+            <input
+              name="finalPrice"
+              value={form.finalPrice}
+              placeholder="Final price"
+              onChange={handleChange}
+              className="input"
+            />
           </div>
         </section>
 
@@ -135,17 +169,34 @@ export default function AdminDashboard() {
         <section>
           <h2 className="section-title">Meta</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <input name="sizes" placeholder="Sizes (7,8,9)" onChange={handleChange} className="input" />
-            <select name="sex" onChange={handleChange} className="input">
+            <input
+              name="sizes"
+              value={form.sizes}
+              placeholder="Sizes (7,8,9)"
+              onChange={handleChange}
+              className="input"
+            />
+            <select
+              name="sex"
+              value={form.sex}
+              onChange={handleChange}
+              className="input"
+            >
               <option>Male</option>
               <option>Female</option>
               <option>Unisex</option>
             </select>
-            <input name="about" placeholder="About (latest / trending)" onChange={handleChange} className="input" />
+            <input
+              name="about"
+              value={form.about}
+              placeholder="About (latest / trending)"
+              onChange={handleChange}
+              className="input"
+            />
           </div>
         </section>
 
-        {/* IMAGE UPLOAD */}
+        {/* IMAGE */}
         <section>
           <h2 className="section-title">Product Image</h2>
           <input type="file" accept="image/*" onChange={handleImageChange} />
@@ -164,6 +215,7 @@ export default function AdminDashboard() {
           <div className="flex items-center gap-4">
             <input
               name="color"
+              value={form.color}
               placeholder="#cc2424"
               onChange={handleChange}
               className="input w-40"
@@ -181,8 +233,20 @@ export default function AdminDashboard() {
         <section>
           <h2 className="section-title">Details</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <input name="material" placeholder="Material" onChange={handleChange} className="input" />
-            <input name="fit" placeholder="Fit" onChange={handleChange} className="input" />
+            <input
+              name="material"
+              value={form.material}
+              placeholder="Material"
+              onChange={handleChange}
+              className="input"
+            />
+            <input
+              name="fit"
+              value={form.fit}
+              placeholder="Fit"
+              onChange={handleChange}
+              className="input"
+            />
           </div>
         </section>
 
