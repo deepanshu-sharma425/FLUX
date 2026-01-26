@@ -40,13 +40,14 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         message: "Login successful",
+        isAdmin,
         user: {
           id: user.id,
           email: user.email,
           name: user.name,
           
         },
-        isAdmin
+    
       },
       { status: 200 }
     );
