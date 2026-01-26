@@ -11,7 +11,6 @@ export default function AdminDashboard() {
     price: "",
     discount: "",
     finalPrice: "",
-    image: "",
     color: "",
     sex: "Male",
     about: "",
@@ -19,11 +18,36 @@ export default function AdminDashboard() {
     fit: "",
   });
 
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const uploadImage = async () => {
+    const formData = new FormData();
+    formData.append("file", imageFile);
+
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error("Image upload failed");
+
+    return data.url;
   };
 
   const handleSubmit = async (e) => {
@@ -32,12 +56,18 @@ export default function AdminDashboard() {
     setMessage("");
 
     try {
+      let imageUrl = "";
+      if (imageFile) {
+        imageUrl = await uploadImage();
+      }
+
       const res = await fetch("/api/adminpost", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           adminEmail: "admin@gmail.com",
           ...form,
+          image: imageUrl,
           sizes: form.sizes.split(","),
           price: Number(form.price),
           discount: Number(form.discount),
@@ -48,31 +78,31 @@ export default function AdminDashboard() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
 
-      setMessage("✔ Cloth added successfully");
+      setMessage("✅ Cloth added successfully");
+      setImageFile(null);
+      setImagePreview("");
     } catch (err) {
-      setMessage("✖ " + err.message);
+      setMessage("❌ " + err.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="min-h-screen bg-[#f6ecdf] px-6 py-10">
-      {/* Header */}
-      <Link href="/products">all producrs</Link>
-      <div className="max-w-6xl mx-auto mb-8">
-        <h1 className="text-4xl font-black tracking-wide">
-          Admin Dashboard
-        </h1>
-        <p className="text-gray-600 mt-1">
-          Add and manage products
-        </p>
+    <main className="min-h-screen bg-[#f6ecdf] px-4 md:px-8 py-10">
+      <div className="max-w-7xl mx-auto mb-8 flex justify-between items-center">
+        <div>
+          <h1 className="text-4xl font-black">Admin Dashboard</h1>
+          <p className="text-gray-600 mt-1">Add and manage products</p>
+        </div>
+        <Link href="/products" className="text-sm underline">
+          View products
+        </Link>
       </div>
 
-      {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="max-w-6xl mx-auto bg-[#f2efe9] rounded-2xl p-8 space-y-10"
+        className="max-w-7xl mx-auto bg-[#f2efe9] rounded-2xl p-6 md:p-10 space-y-10"
       >
         {/* BASIC */}
         <section>
@@ -106,16 +136,26 @@ export default function AdminDashboard() {
           <h2 className="section-title">Meta</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <input name="sizes" placeholder="Sizes (7,8,9)" onChange={handleChange} className="input" />
-
             <select name="sex" onChange={handleChange} className="input">
               <option>Male</option>
               <option>Female</option>
               <option>Unisex</option>
             </select>
-
             <input name="about" placeholder="About (latest / trending)" onChange={handleChange} className="input" />
-            <input name="image" placeholder="Image URL / path" onChange={handleChange} className="input" />
           </div>
+        </section>
+
+        {/* IMAGE UPLOAD */}
+        <section>
+          <h2 className="section-title">Product Image</h2>
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+          {imagePreview && (
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="mt-4 w-40 h-40 object-cover rounded-xl border"
+            />
+          )}
         </section>
 
         {/* COLOR */}
@@ -146,17 +186,14 @@ export default function AdminDashboard() {
           </div>
         </section>
 
-        {/* ACTION */}
         <button
           disabled={loading}
-          className="w-full bg-black text-white py-4 rounded-xl font-semibold hover:opacity-90 transition"
+          className="w-full bg-black text-white py-4 rounded-xl font-semibold hover:opacity-90 transition disabled:opacity-60"
         >
-          {loading ? "Adding..." : "Add Cloth"}
+          {loading ? "Adding product..." : "Add Cloth"}
         </button>
 
-        {message && (
-          <p className="text-center font-medium">{message}</p>
-        )}
+        {message && <p className="text-center font-medium">{message}</p>}
       </form>
     </main>
   );
