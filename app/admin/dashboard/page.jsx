@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { useState } from "react";
 
 export default function AdminDashboard() {
@@ -59,6 +59,7 @@ export default function AdminDashboard() {
   return (
     <main className="min-h-screen bg-[#f6ecdf] px-6 py-10">
       {/* Header */}
+      <Link href="/products">all producrs</Link>
       <div className="max-w-6xl mx-auto mb-8">
         <h1 className="text-4xl font-black tracking-wide">
           Admin Dashboard
