@@ -10,42 +10,43 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const router=useRouter();
   const [error, setError] = useState("");
-  const handleLogin=async(e)=>{
-    e.preventDefault();
-    setLoading(true)
-    setError("")
-    try{
-      const res=await fetch("/api/auth/login",{
-        method:"POST",
-        headers:{"content-type":"application/json"},
-        body:JSON.stringify({email,password})
-        
-      })
-      const data=await res.json()
-      if(!res.ok){
-        setError(data.error )
-        setLoading(false)
-      }
-      router.push("/")
-    }
-    catch(err){
-      setError(err.message)
-    }
-    finally{
-      setLoading(false)
+  const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError("");
+
+  try {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.message);
+      return;
     }
 
+    if (data.isAdmin) {
+      router.push("/admin/dashboard");
+      return;
+    }
+
+    router.push("/");
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
   }
-  
-
-  
-
+};
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-[#f6ecdf] px-4">
       <div className="w-full max-w-md bg-[#f2efe9] rounded-2xl p-6 sm:p-8 shadow-sm">
 
-        {/* Brand */}
+  
         <h1 className="text-3xl font-black tracking-widest text-center mb-2">
           FLUX
         </h1>
@@ -53,7 +54,7 @@ export default function Login() {
           Welcome back. Sign in to continue.
         </p>
 
-        {/* Form */}
+  
         <form className="space-y-4" onSubmit={handleLogin}>
           <input
             type="email"
@@ -82,14 +83,14 @@ export default function Login() {
           </button>
         </form>
 
-        {/* Error */}
+
         {error && (
           <p className="mt-4 text-center text-sm text-red-600">
             {error}
           </p>
         )}
 
-        {/* Footer */}
+
         <div className="mt-6 text-center text-sm text-gray-600">
           Don’t have an account?{" "}
           <Link

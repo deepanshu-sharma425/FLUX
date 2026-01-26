@@ -7,14 +7,12 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { email, password } = body;
-
     if (!email || !password) {
       return NextResponse.json(
         { message: "Email and password are required" },
         { status: 400 }
       );
     }
-
     const user = await prisma.user.findUnique({
       where: { email: email.toLowerCase() },
     });
@@ -31,12 +29,14 @@ export async function POST(req: Request) {
       user.password
     );
 
+
     if (!isPasswordValid) {
       return NextResponse.json(
         { message: "Invalid email or password" },
         { status: 401 }
       );
     }
+    const isAdmin=email===process.env.ADMIN_EMAIL;
     return NextResponse.json(
       {
         message: "Login successful",
@@ -44,12 +44,15 @@ export async function POST(req: Request) {
           id: user.id,
           email: user.email,
           name: user.name,
+          
         },
+        isAdmin
       },
       { status: 200 }
     );
-  } catch (err: any) {
-    console.error("LOGIN ERROR 👉", err);
+     }
+    catch (err: any) {
+      console.error("LOGIN ERROR ", err);
 
     return NextResponse.json(
       { message: "Internal server error" },
