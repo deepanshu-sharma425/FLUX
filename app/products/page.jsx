@@ -2,6 +2,7 @@ import { prisma } from "../../lib/prisma";
 
 export default async function ProductsPage() {
   const products = await prisma.cloth.findMany();
+  console.log(products);
 
   return (
     <div style={{ padding: "40px" }}>
