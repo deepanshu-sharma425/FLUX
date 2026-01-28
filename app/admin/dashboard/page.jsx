@@ -79,11 +79,11 @@ export default function AdminDashboard() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Something went wrong");
 
-      // ✅ RESET EVERYTHING
+
       setForm(initialFormState);
       setImageFile(null);
       setImagePreview("");
-      setMessage("Cloth added successfully ✅");
+      setMessage("Cloth added successfully");
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -107,7 +107,7 @@ export default function AdminDashboard() {
         onSubmit={handleSubmit}
         className="max-w-7xl mx-auto bg-[#f2efe9] rounded-2xl p-6 md:p-10 space-y-10"
       >
-        {/* BASIC */}
+
         <section>
           <h2 className="section-title">Basic Information</h2>
           <div className="grid md:grid-cols-2 gap-6">
@@ -117,6 +117,7 @@ export default function AdminDashboard() {
               placeholder="Product name"
               onChange={handleChange}
               className="input"
+              required
             />
             <input
               name="category"
@@ -124,6 +125,7 @@ export default function AdminDashboard() {
               placeholder="Category"
               onChange={handleChange}
               className="input"
+              required
             />
           </div>
 
@@ -134,10 +136,11 @@ export default function AdminDashboard() {
             onChange={handleChange}
             className="input mt-6"
             rows={3}
+            required
           />
         </section>
 
-        {/* PRICING */}
+       
         <section>
           <h2 className="section-title">Pricing</h2>
           <div className="grid md:grid-cols-3 gap-6">
@@ -147,6 +150,7 @@ export default function AdminDashboard() {
               placeholder="Price"
               onChange={handleChange}
               className="input"
+              required
             />
             <input
               name="discount"
@@ -154,6 +158,7 @@ export default function AdminDashboard() {
               placeholder="Discount %"
               onChange={handleChange}
               className="input"
+              required
             />
             <input
               name="finalPrice"
@@ -161,11 +166,12 @@ export default function AdminDashboard() {
               placeholder="Final price"
               onChange={handleChange}
               className="input"
+              required
             />
           </div>
         </section>
 
-        {/* META */}
+
         <section>
           <h2 className="section-title">Meta</h2>
           <div className="grid md:grid-cols-2 gap-6">
@@ -175,12 +181,14 @@ export default function AdminDashboard() {
               placeholder="Sizes (7,8,9)"
               onChange={handleChange}
               className="input"
+              required
             />
             <select
               name="sex"
               value={form.sex}
               onChange={handleChange}
               className="input"
+              required
             >
               <option>Male</option>
               <option>Female</option>
@@ -192,14 +200,15 @@ export default function AdminDashboard() {
               placeholder="About (latest / trending)"
               onChange={handleChange}
               className="input"
+              required
             />
           </div>
         </section>
 
-        {/* IMAGE */}
+
         <section>
           <h2 className="section-title">Product Image</h2>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+          <input type="file" accept="image/*" onChange={handleImageChange} required/>
           {imagePreview && (
             <img
               src={imagePreview}
@@ -209,7 +218,7 @@ export default function AdminDashboard() {
           )}
         </section>
 
-        {/* COLOR */}
+
         <section>
           <h2 className="section-title">Color</h2>
           <div className="flex items-center gap-4">
@@ -219,6 +228,7 @@ export default function AdminDashboard() {
               placeholder="#cc2424"
               onChange={handleChange}
               className="input w-40"
+              required
             />
             {form.color && (
               <div
@@ -229,7 +239,7 @@ export default function AdminDashboard() {
           </div>
         </section>
 
-        {/* DETAILS */}
+
         <section>
           <h2 className="section-title">Details</h2>
           <div className="grid md:grid-cols-2 gap-6">
@@ -239,6 +249,7 @@ export default function AdminDashboard() {
               placeholder="Material"
               onChange={handleChange}
               className="input"
+              required
             />
             <input
               name="fit"
@@ -246,6 +257,7 @@ export default function AdminDashboard() {
               placeholder="Fit"
               onChange={handleChange}
               className="input"
+              required
             />
           </div>
         </section>

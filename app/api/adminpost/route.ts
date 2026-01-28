@@ -24,7 +24,7 @@ export async function POST(req: Request) {
       fit,
     } = body;
 
-    // 🔒 BASIC VALIDATION
+
     if (
       !name ||
       !category ||
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ Validate enum
+
     if (!VALID_SEX.includes(sex)) {
       return NextResponse.json(
         { message: "Invalid sex value" },
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ Normalize sizes
+
     if (typeof sizes === "string") {
       sizes = sizes.split(",").map((s: string) => s.trim());
     }
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ Normalize numbers
+
     price = Number(price);
     discount = Number(discount);
 
@@ -80,10 +80,10 @@ export async function POST(req: Request) {
       );
     }
 
-    // 🧮 Calculate final price in backend
+
     const finalPrice = Math.round(price - (price * discount) / 100);
 
-    // ✅ CREATE CLOTH
+
     const newCloth = await prisma.cloth.create({
       data: {
         name: name.trim(),
