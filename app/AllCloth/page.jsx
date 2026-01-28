@@ -1,12 +1,15 @@
-"use client";
-
+// "use client";
 import Navbar from "@/Components/Navbar";
+import { prisma } from "../../lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
-import products from "@/Components/Asset";
+// import products from "@/Components/Asset";
 
-export default function AllCloth() {
+export default  async function AllCloth() {
+  const products = await prisma.cloth.findMany();
+  
+
   return (
     <>
 
@@ -56,7 +59,7 @@ export default function AllCloth() {
 
 
                   <div className="relative w-full h-[260px] mb-4 rounded-lg overflow-hidden">
-                    <Image
+                    <img
                       src={product.image}
                       alt={product.name}
                       fill
