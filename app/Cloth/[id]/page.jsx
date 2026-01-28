@@ -2,6 +2,7 @@
 
 import Navbar from "@/Components/Navbar";
 import products from "@/Components/Asset";
+// import { prisma } from "../../lib/prisma";
 import Image from "next/image";
 import { Heart, Star } from "lucide-react";
 import { useParams } from "next/navigation";
