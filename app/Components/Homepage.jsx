@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { ArrowBigRight } from "lucide-react";
 // import { useState } from "react";
@@ -6,8 +6,7 @@ import Image from "next/image";
 import Corusel from "./Corusel/Corusel";
 import Filtercorusel from "./Corusel/Filtercorusel";
 import Story from "./Story";
-import Login from "./login/page";
-import Signup from "./Signup/page";
+
 import HomeFooter from "./Footer/HomeFotter";
 
 const Homepage = () => {
@@ -110,7 +109,7 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-      <Corusel />
+      {/* <Corusel /> */}
       <Filtercorusel/>
       <Story/>
       <HomeFooter/>

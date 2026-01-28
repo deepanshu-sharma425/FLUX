@@ -4,12 +4,8 @@ import { prisma } from "../../lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
-// import products from "@/Components/Asset";
-
 export default  async function AllCloth() {
   const products = await prisma.cloth.findMany();
-  
-
   return (
     <>
 
