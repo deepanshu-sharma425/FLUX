@@ -110,7 +110,7 @@ const Homepage = () => {
         </div>
       </section>
       {/* <Corusel /> */}
-      <Filtercorusel/>
+      {/* <Filtercorusel/> */}
       <Story/>
       <HomeFooter/>
     </>
