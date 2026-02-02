@@ -109,8 +109,8 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-      {/* <Corusel /> */}
-      {/* <Filtercorusel/> */}
+      <Corusel />
+      <Filtercorusel/>
       <Story/>
       <HomeFooter/>
     </>

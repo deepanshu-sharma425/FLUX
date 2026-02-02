@@ -2,9 +2,7 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import Link from "next/link";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -44,10 +42,11 @@ const CoruselClient = ({ products }) => {
               <div className="px-1 sm:px-2">
                 <div className="group relative overflow-hidden bg-[#f2efe9] rounded-xl">
                   <div className="relative h-[300px] sm:h-[420px] md:h-[520px]">
-                    <Image
+                    <img
                       src={product.image}
                       alt={product.name}
-                      fill
+                      height={400}
+                      width={400}
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />

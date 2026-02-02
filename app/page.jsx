@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 import Navbar from "./Components/Navbar";
 import Homepage from "./Components/Homepage";
 
