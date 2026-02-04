@@ -52,7 +52,8 @@ export default async function ProductPage({ params }) {
                 src={product.image}
                 alt={product.name}
                 fill
-                priority
+                height={400}
+                width={400}
                 className="object-contain"
               />
             </div>

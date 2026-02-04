@@ -71,7 +71,8 @@ export default function FiltercoruselClient({ products }) {
                       <img
                         src={product.image}
                         alt={product.name}
-                        priority
+                        width={400}
+                        height={400}
                         className="object-contain"
                       />
                     </div>
