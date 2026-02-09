@@ -43,7 +43,7 @@ const HomeFooter = () => {
           <Image src="/Asset/image.png" alt="Adidas" width={100} height={60} />
           <Image src="/Asset/image2.png" alt="Nike" width={100} height={60} />
           <Image src="/Asset/image3.png" alt="Puma" width={140} height={60} />
-          <Image src="/Asset/image4.png" alt="Converse" width={100} height={60} />
+          <Image src="/Asset/image4.png" alt="sketchers" width={100} height={60} />
         </div>
       </div>
 

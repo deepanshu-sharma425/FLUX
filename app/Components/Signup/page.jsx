@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -110,6 +111,15 @@ export default function Signup() {
           Already have an account?{" "}
           <Link href="/Components/login" className="font-semibold text-black hover:underline">
             Login
+          </Link>
+        </div>
+        <div className="mt-4 text-center">
+          <div className="px-8 border rounded-2xl flex gap-2 items-center justify-center mx-auto w-fit py-2 cursor-pointer hover:bg-gray-200 transition">
+            <div>Signup with Google</div>
+            <Image src={'/Asset/google.png'} width={20} height={20} alt="google svg"/>
+          </div>
+          <Link href="/" className="text-sm text-gray-600 pt-3 hover:underline">
+            Back to Home
           </Link>
         </div>
       </div>
