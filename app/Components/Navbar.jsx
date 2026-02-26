@@ -7,9 +7,9 @@ const Navbar = () => {
 
   const categories = [
     { label: "All", href: "/AllCloth" },
-    { label: "Skateboarders", href: "/category/skateboarders" },
-    { label: "Urban", href: "/category/urban" },
-    { label: "Powerups", href: "/category/powerups" },
+    { label: "Her", href: "/Her" },
+    { label: "Him", href: "/Him" },
+    { label: "Unisex", href: "/Unisex" },
   ];
   
   const [open, setOpen] = useState(false);

@@ -1,4 +1,5 @@
 import { prisma } from "../../../lib/prisma";
+import React from "react";
 import CoruselClient from "./CoruselClient";
 const Corusel = async () => {
   const products = await prisma.cloth.findMany();

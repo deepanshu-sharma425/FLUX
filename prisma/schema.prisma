@@ -6,19 +6,20 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id       String @id @default(uuid())
-  email    String @unique
-  name     String
-  password String
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String
+  name      String
+  addresses Address[]
+  cartItems CartItem[]
+  orders    Order[]
+  wishlist  Wishlist[]
 }
-enum Sex {
-  Male
-  Female
-  Unisex
-}
+
 model Cloth {
-  id          Int      @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   name        String
   category    String
   description String
@@ -30,15 +31,102 @@ model Cloth {
   color       String
   sex         Sex
   about       String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  cartItems   CartItem[]
   details     ClothDetails?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  orderItems  OrderItem[]
+  wishlist    Wishlist[]
 }
 
 model ClothDetails {
-  id        Int    @id @default(autoincrement())
-  material  String
-  fit       String
-  cloth     Cloth @relation(fields: [clothId], references: [id])
-  clothId   Int   @unique
+  id       Int    @id @default(autoincrement())
+  material String
+  fit      String
+  clothId  Int    @unique
+  cloth    Cloth  @relation(fields: [clothId], references: [id])
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  size      String
+  color     String
+  userId    String
+  clothId   Int
+  createdAt DateTime @default(now())
+  cloth     Cloth    @relation(fields: [clothId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, clothId, size])
+}
+
+model Wishlist {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  clothId   Int
+  createdAt DateTime @default(now())
+  cloth     Cloth    @relation(fields: [clothId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, clothId])
+}
+
+model Address {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  phone     String
+  street    String
+  city      String
+  state     String
+  pincode   String
+  country   String
+  userId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  orders    Order[]
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  totalAmount Int
+  status      OrderStatus
+  paymentMode PaymentMode
+  userId      String
+  addressId   Int
+  createdAt   DateTime    @default(now())
+  address     Address     @relation(fields: [addressId], references: [id])
+  user        User        @relation(fields: [userId], references: [id])
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id       Int    @id @default(autoincrement())
+  quantity Int
+  price    Int
+  size     String
+  color    String
+  clothId  Int
+  orderId  String
+  cloth    Cloth  @relation(fields: [clothId], references: [id])
+  order    Order  @relation(fields: [orderId], references: [id])
+}
+
+enum Sex {
+  Male
+  Female
+  Unisex
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentMode {
+  COD
+  ONLINE
 }
