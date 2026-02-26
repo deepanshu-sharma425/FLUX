@@ -1,6 +1,8 @@
 import { ArrowBigRight } from "lucide-react";
 import Image from "next/image";
+import { Suspense } from "react";
 import Corusel from "./Corusel/Corusel";
+import CoruselSkeleton from "./Corusel/CoruselSkeleton";
 import Filtercorusel from "./Corusel/Filtercorusel";
 import Story from "./Story";
 
@@ -106,7 +108,9 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-      <Corusel />
+      <Suspense fallback={<CoruselSkeleton />}>
+        <Corusel />
+      </Suspense>
       <Filtercorusel/>
       <Story/>
       <HomeFooter/>

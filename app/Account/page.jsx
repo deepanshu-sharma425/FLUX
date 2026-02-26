@@ -3,6 +3,7 @@ import { prisma } from "../../lib/prisma";
 import { cookies } from "next/headers";
 import { TOKEN_NAME, verifyAuthToken } from "../../lib/jwt";
 import Link from "next/link";
+import { MapPin } from "lucide-react";
 
 export default async function AccountPage() {
   const cookieStore = await cookies();
@@ -92,6 +93,28 @@ export default async function AccountPage() {
                 {payload.isAdmin ? "Admin" : "Customer"}
               </p>
             </div>
+          </div>
+
+          <div className="mt-6">
+            <Link
+              href="/Account/Address"
+              className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-gray-100 rounded-full group-hover:bg-[#f6ecdf] transition-colors">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg">My Addresses</h3>
+                  <p className="text-sm text-gray-500">
+                    Manage your shipping addresses
+                  </p>
+                </div>
+              </div>
+              <div className="text-gray-400 group-hover:text-black transition-colors">
+                →
+              </div>
+            </Link>
           </div>
         </div>
       </section>
