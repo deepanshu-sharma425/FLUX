@@ -3,6 +3,7 @@ export const runtime = "nodejs";
 import { prisma } from "../../../../lib/prisma";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
+import { signAuthToken, TOKEN_NAME } from "../../../../lib/jwt";
 
 export async function POST(req: Request) {
   try {
@@ -28,18 +29,36 @@ export async function POST(req: Request) {
 
     const hashedPass = await bcrypt.hash(password, 12);
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
-        email,
+        email: email.toLowerCase(),
         name,
         password: hashedPass,
       },
     });
 
-    return NextResponse.json(
+    const isAdmin = user.email.toLowerCase() === process.env.ADMIN_EMAIL?.toLowerCase();
+
+    const token = signAuthToken({
+      userId: user.id,
+      email: user.email,
+      isAdmin,
+    });
+
+    const response = NextResponse.json(
       { message: "User created success" },
       { status: 201 }
     );
+
+    response.cookies.set(TOKEN_NAME, token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
+    return response;
   } catch (err) {
     console.error(err);
     return NextResponse.json(

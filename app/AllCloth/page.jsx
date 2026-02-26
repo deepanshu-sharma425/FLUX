@@ -55,7 +55,7 @@ export default  async function AllCloth() {
 
 
                   <div className="relative w-full h-[260px] mb-4 rounded-lg overflow-hidden">
-                    <img
+                    <Image
                       src={product.image}
                       alt={product.name}
                       fill

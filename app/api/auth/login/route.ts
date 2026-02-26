@@ -2,6 +2,7 @@ export const runtime = "nodejs";
 import { prisma } from "../../../../lib/prisma";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
+import { signAuthToken, TOKEN_NAME } from "../../../../lib/jwt";
 
 export async function POST(req: Request) {
   try {
@@ -36,8 +37,16 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
-    const isAdmin=email===process.env.ADMIN_EMAIL;
-    return NextResponse.json(
+
+    const isAdmin = email.toLowerCase() === process.env.ADMIN_EMAIL?.toLowerCase();
+
+    const token = signAuthToken({
+      userId: user.id,
+      email: user.email,
+      isAdmin,
+    });
+
+    const response = NextResponse.json(
       {
         message: "Login successful",
         isAdmin,
@@ -45,12 +54,20 @@ export async function POST(req: Request) {
           id: user.id,
           email: user.email,
           name: user.name,
-          
         },
-    
       },
       { status: 200 }
     );
+
+    response.cookies.set(TOKEN_NAME, token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    });
+
+    return response;
      }
     catch (err: any) {
       console.error("LOGIN ERROR ", err);

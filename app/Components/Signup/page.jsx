@@ -14,6 +14,30 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const mergeGuestCart = async () => {
+    if (typeof window === "undefined") return;
+    const raw = window.localStorage.getItem("flux_cart");
+    if (!raw) return;
+
+    try {
+      const items = JSON.parse(raw);
+      if (!Array.isArray(items)) return;
+
+      await Promise.all(
+        items.map((item) =>
+          fetch("/api/cart", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(item),
+          }).catch(() => {})
+        )
+      );
+      window.localStorage.removeItem("flux_cart");
+    } catch {
+      // ignore merge errors
+    }
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -40,8 +64,8 @@ export default function Signup() {
         return;
       }
 
-
-      router.push("/");
+      await mergeGuestCart();
+      router.push("/Account");
     } catch (err) {
       setError("Something went wrong");
     } finally {

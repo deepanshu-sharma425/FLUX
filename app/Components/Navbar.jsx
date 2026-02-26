@@ -1,6 +1,7 @@
 'use client';
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Search, ShoppingCartIcon, User2, Menu, X } from "lucide-react";
 
 const Navbar = () => {
@@ -13,6 +14,36 @@ const Navbar = () => {
   ];
   
   const [open, setOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [authUser, setAuthUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadUser = async () => {
+      try {
+        const res = await fetch("/api/auth/me", { cache: "no-store" });
+        const data = await res.json();
+        if (!cancelled && data.authenticated) {
+          setAuthUser(data.user);
+        }
+      } catch {
+        // ignore
+      }
+    };
+    loadUser();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const q = searchTerm.trim();
+    if (!q) return;
+    router.push(`/search?q=${encodeURIComponent(q)}`);
+    setOpen(false);
+  };
 
   return (
     <>
@@ -28,7 +59,7 @@ const Navbar = () => {
           FLUX
         </h2></Link>
 
-        <div className="hidden md:flex gap-6">
+        <div className="hidden md:flex gap-6 items-center">
           {categories.map((item) => (
         <Link
           key={item.label}
@@ -39,12 +70,37 @@ const Navbar = () => {
         </Link>
       ))}
         </div>
+        <form
+          onSubmit={handleSearch}
+          className="hidden md:flex items-center gap-2 bg-[#f2efe9] px-3 py-1.5 rounded-full border border-black/5"
+        >
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search"
+            className="bg-transparent text-sm focus:outline-none placeholder:text-gray-400 w-32 lg:w-40"
+          />
+          <button type="submit">
+            <Search className="w-4 h-4 cursor-pointer" />
+          </button>
+        </form>
         <div className="flex items-center gap-3 sm:gap-4">
-          <Search className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
-          <ShoppingCartIcon className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
-          <Link href="/Components/login">
-            <User2 className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
+          <Link href="/Cart">
+            <ShoppingCartIcon className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
+          </Link>
+          {authUser ? (
+            <Link href="/Account" className="flex items-center gap-2">
+              <User2 className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
+              <span className="hidden sm:inline text-xs font-mono">
+                {authUser.name || authUser.email}
+              </span>
             </Link>
+          ) : (
+            <Link href="/Components/login">
+              <User2 className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
+            </Link>
+          )}
 
           <button
             onClick={() => setOpen(true)}
@@ -64,6 +120,22 @@ const Navbar = () => {
               <X className="w-6 h-6" />
             </button>
           </div>
+
+          <form
+            onSubmit={handleSearch}
+            className="px-6 pb-4"
+          >
+            <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full">
+              <Search className="w-5 h-5" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search products"
+                className="bg-transparent text-sm flex-1 focus:outline-none"
+              />
+            </div>
+          </form>
 
             <div className="flex flex-col items-center justify-center flex-1 gap-8">
   {categories.map((item) => (

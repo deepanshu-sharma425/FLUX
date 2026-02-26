@@ -78,14 +78,15 @@ export default function FiltercoruselClient({ products }) {
                     </div>
 
                     <div className="p-4">
-                      <h3 className="text-sm font-bold uppercase">
-                        {product.name}
+                      <h3 className="text-sm font-bold uppercase line-clamp-1">
+                        {product.name || "FLUX PIECE"}
                       </h3>
-                      <p className="text-xs text-gray-600">
-                        {product.description}
+                      <p className="text-xs text-gray-600 line-clamp-2">
+                        {product.description ||
+                          "Curated from the latest FLUX collection."}
                       </p>
                       <p className="mt-2 font-bold">
-                        ₹{product.finalPrice}
+                        ₹{product.finalPrice ?? product.price ?? "—"}
                       </p>
                     </div>
 

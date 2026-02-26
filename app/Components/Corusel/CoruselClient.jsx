@@ -53,17 +53,23 @@ const CoruselClient = ({ products }) => {
                   </div>
 
                   <div className="absolute bottom-6 left-5 right-5 text-white">
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide">
-                      {product.name.toUpperCase()}
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide line-clamp-1">
+                      {product.name || "FLUX DROP"}
                     </h3>
 
-                    <p className="text-sm sm:text-base text-gray-200 mt-1">
-                      {product.description}
+                    <p className="text-sm sm:text-base text-gray-200 mt-1 line-clamp-2">
+                      {product.description ||
+                        "Signature FLUX streetwear built for the city."}
                     </p>
 
-                    <button className="mt-4 text-sm font-semibold underline underline-offset-4 hover:text-[#FF8A00] transition">
-                      SHOP NOW
-                    </button>
+                    <div className="mt-3 flex items-center justify-between text-sm">
+                      <span className="font-semibold">
+                        ₹{product.finalPrice ?? product.price ?? "—"}
+                      </span>
+                      <button className="text-xs sm:text-sm font-semibold underline underline-offset-4 hover:text-[#FF8A00] transition">
+                        SHOP NOW
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
