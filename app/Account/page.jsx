@@ -3,12 +3,15 @@ import { prisma } from "../../lib/prisma";
 import { cookies } from "next/headers";
 import { TOKEN_NAME, verifyAuthToken } from "../../lib/jwt";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { MapPin, ShoppingBag, LayoutDashboard, LogOut } from "lucide-react";
+import LogoutButton from "./LogoutButton";
 
 export default async function AccountPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get(TOKEN_NAME)?.value;
   const payload = token ? verifyAuthToken(token) : null;
+
+  const isAdmin = payload?.email === "admin@gmail.com"; // Basic admin check matching current codebase style
 
   if (!payload) {
     return (
@@ -95,14 +98,34 @@ export default async function AccountPage() {
             </div>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-6 space-y-4">
             <Link
-              href="/Account/Address"
-              className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow group"
+              href="/Account/Orders"
+              className="flex items-center justify-between p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all group border border-transparent hover:border-black/5"
             >
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-gray-100 rounded-full group-hover:bg-[#f6ecdf] transition-colors">
-                  <MapPin className="w-5 h-5" />
+                <div className="p-3 bg-gray-100 rounded-xl group-hover:bg-[#f6ecdf] transition-colors">
+                  <ShoppingBag className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg">My Orders</h3>
+                  <p className="text-sm text-gray-500">
+                    Track and view your order history
+                  </p>
+                </div>
+              </div>
+              <div className="text-gray-300 group-hover:text-black transition-all translate-x-0 group-hover:translate-x-1">
+                →
+              </div>
+            </Link>
+
+            <Link
+              href="/Account/Address"
+              className="flex items-center justify-between p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all group border border-transparent hover:border-black/5"
+            >
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-gray-100 rounded-xl group-hover:bg-[#f6ecdf] transition-colors">
+                  <MapPin className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="font-bold text-lg">My Addresses</h3>
@@ -111,10 +134,34 @@ export default async function AccountPage() {
                   </p>
                 </div>
               </div>
-              <div className="text-gray-400 group-hover:text-black transition-colors">
+              <div className="text-gray-300 group-hover:text-black transition-all translate-x-0 group-hover:translate-x-1">
                 →
               </div>
             </Link>
+
+            {isAdmin && (
+              <Link
+                href="/admin/dashboard"
+                className="flex items-center justify-between p-6 bg-black text-white rounded-2xl shadow-sm hover:shadow-lg transition-all group border border-transparent"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-white/10 rounded-xl group-hover:bg-white/20 transition-colors">
+                    <LayoutDashboard className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg">Admin Dashboard</h3>
+                    <p className="text-sm text-gray-400">
+                      Manage products and customer orders
+                    </p>
+                  </div>
+                </div>
+                <div className="text-white/50 group-hover:text-white transition-all translate-x-0 group-hover:translate-x-1">
+                  →
+                </div>
+              </Link>
+            )}
+
+            <LogoutButton />
           </div>
         </div>
       </section>

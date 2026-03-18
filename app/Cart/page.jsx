@@ -129,9 +129,12 @@ export default async function CartPage() {
                   <span>Total</span>
                   <span>₹{total}</span>
                 </div>
-                <button className="w-full py-3 rounded-full bg-black text-white text-sm font-semibold hover:bg-[#FF8A00] transition">
+                <Link
+                  href="/Checkout"
+                  className="w-full py-3 inline-block text-center rounded-full bg-black text-white text-sm font-semibold hover:bg-[#FF8A00] transition"
+                >
                   Checkout
-                </button>
+                </Link>
               </div>
             </div>
           )}

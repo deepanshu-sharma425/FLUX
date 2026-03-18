@@ -2,10 +2,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, ShoppingCartIcon, User2, Menu, X } from "lucide-react";
+import { Search, ShoppingCartIcon, User2, Menu, X, Heart, LogOut } from "lucide-react";
+import { getCartCount, getWishlistCount } from "@/actions/cart";
 
 const Navbar = () => {
-
   const categories = [
     { label: "All", href: "/AllCloth" },
     { label: "Her", href: "/Her" },
@@ -16,24 +16,45 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [authUser, setAuthUser] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
     let cancelled = false;
-    const loadUser = async () => {
+    const loadUserAndCart = async () => {
       try {
         const res = await fetch("/api/auth/me", { cache: "no-store" });
         const data = await res.json();
         if (!cancelled && data.authenticated) {
           setAuthUser(data.user);
+          const [cCount, wCount] = await Promise.all([
+            getCartCount(),
+            getWishlistCount()
+          ]);
+          setCartCount(cCount);
+          setWishlistCount(wCount);
         }
       } catch {
         // ignore
       }
     };
-    loadUser();
+    loadUserAndCart();
+
+    const handleCartUpdate = async () => {
+      const [cCount, wCount] = await Promise.all([
+        getCartCount(),
+        getWishlistCount()
+      ]);
+      setCartCount(cCount);
+      setWishlistCount(wCount);
+    };
+
+    window.addEventListener("cart-updated", handleCartUpdate);
+
     return () => {
       cancelled = true;
+      window.removeEventListener("cart-updated", handleCartUpdate);
     };
   }, []);
 
@@ -43,6 +64,20 @@ const Navbar = () => {
     if (!q) return;
     router.push(`/search?q=${encodeURIComponent(q)}`);
     setOpen(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/auth/logout", { method: "POST" });
+      if (res.ok) {
+        setAuthUser(null);
+        setCartCount(0);
+        router.push("/");
+        router.refresh();
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
@@ -86,70 +121,93 @@ const Navbar = () => {
           </button>
         </form>
         <div className="flex items-center gap-3 sm:gap-4">
-          <Link href="/Cart">
+          <Link href="/wishlist" className="relative">
+            <Heart className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
+            {wishlistCount > 0 && (
+              <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-white text-[10px] flex items-center justify-center rounded-full">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
+          <Link href="/Cart" className="relative">
             <ShoppingCartIcon className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 w-5 h-5 bg-orange-500 text-white text-xs flex items-center justify-center rounded-full">
+                {cartCount}
+              </span>
+            )}
           </Link>
           {authUser ? (
-            <Link href="/Account" className="flex items-center gap-2">
-              <User2 className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
-              <span className="hidden sm:inline text-xs font-mono">
-                {authUser.name || authUser.email}
-              </span>
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link href="/Account" className="flex items-center gap-2">
+                <User2 className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
+                <span className="hidden sm:inline text-xs font-mono">
+                  {authUser.name || authUser.email}
+                </span>
+              </Link>
+              <button onClick={handleLogout} className="text-gray-600 hover:text-black transition">
+                <LogOut className="w-5 h-5" />
+              </button>
+            </div>
           ) : (
             <Link href="/Components/login">
               <User2 className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer" />
             </Link>
           )}
 
-          <button
-            onClick={() => setOpen(true)}
-            className="md:hidden"
-          >
+          <div className="md:hidden cursor-pointer" onClick={() => setOpen(true)}>
             <Menu className="w-6 h-6" />
-          </button>
+          </div>
         </div>
       </nav>
 
       {open && (
-        <div className="fixed inset-0 z-50 bg-[#f0e6d9] flex flex-col">
-       
-          <div className="flex items-center justify-between px-6 py-5">
+        <div className="fixed inset-0 z-[100] bg-[#f6ecdf] flex flex-col p-6 md:hidden">
+          <div className="flex justify-between items-center mb-8">
             <h2 className="font-extrabold text-2xl">FLUX</h2>
-            <button onClick={() => setOpen(false)}>
-              <X className="w-6 h-6" />
-            </button>
+            <X
+              className="w-8 h-8 cursor-pointer"
+              onClick={() => setOpen(false)}
+            />
           </div>
 
-          <form
-            onSubmit={handleSearch}
-            className="px-6 pb-4"
-          >
-            <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full">
-              <Search className="w-5 h-5" />
+          <div className="flex flex-col gap-6 text-center mt-10">
+            {categories.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="text-2xl font-mono hover:opacity-70 transition"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="absolute bottom-10 left-10 right-10 space-y-4">
+            {authUser && (
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center justify-center gap-2 py-4 border-2 border-red-500 text-red-500 rounded-[24px] font-black uppercase tracking-widest text-xs"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
+              </button>
+            )}
+            <form
+              onSubmit={handleSearch}
+              className="flex items-center gap-3 bg-gray-100 p-5 rounded-[24px]"
+            >
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search products"
-                className="bg-transparent text-sm flex-1 focus:outline-none"
+                placeholder="SEARCH..."
+                className="bg-transparent text-sm font-black w-full outline-none"
               />
-            </div>
-          </form>
-
-            <div className="flex flex-col items-center justify-center flex-1 gap-8">
-  {categories.map((item) => (
-    <Link
-      key={item.label}
-      href={item.href}
-      onClick={() => setOpen(false)}
-      className="text-2xl font-mono tracking-wide cursor-pointer hover:opacity-70 transition"
-    >
-      {item.label}
-    </Link>
-  ))}
-</div>
-
+              <Search className="w-6 h-6" />
+            </form>
+          </div>
         </div>
       )}
     </>

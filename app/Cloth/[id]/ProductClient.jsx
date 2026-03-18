@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Heart, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { motion } from "framer-motion";
+import WishlistButton from "@/Components/WishlistButton";
 
 export default function ProductClient({ product }) {
   const [selectedSize, setSelectedSize] = useState(
@@ -76,6 +77,10 @@ export default function ProductClient({ product }) {
       }
 
       setMessage("Added to cart");
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new Event("cart-updated"));
+        router.refresh();
+      }
     } catch {
       setMessage("Could not add to cart");
     } finally {
@@ -115,11 +120,19 @@ export default function ProductClient({ product }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
-          className="space-y-6"
+          className="flex flex-col gap-6"
         >
-          <h1 className="text-3xl font-extrabold tracking-wide">
-            {product.name}
-          </h1>
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-4xl font-extrabold tracking-wide uppercase">
+                {product.name}
+              </h1>
+              <p className="text-gray-500 mt-2 text-sm tracking-widest uppercase">
+                {product.category}
+              </p>
+            </div>
+            <WishlistButton productId={product.id} />
+          </div>
 
           <p className="text-2xl font-bold flex items-center gap-3">
             ₹{product.finalPrice}
@@ -171,16 +184,9 @@ export default function ProductClient({ product }) {
               type="button"
               onClick={handleAddToCart}
               disabled={adding}
-              className="flex-1 bg-black text-white py-3 hover:bg-[#FF8A00] transition disabled:opacity-60"
+              className="flex-1 bg-black text-white py-4 font-black uppercase tracking-widest hover:bg-orange-600 transition disabled:opacity-60 rounded-xl"
             >
               {adding ? "ADDING..." : "ADD TO CART"}
-            </button>
-
-            <button
-              type="button"
-              className="w-12 border flex items-center justify-center"
-            >
-              <Heart />
             </button>
           </div>
 

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Instagram, Twitter, Youtube, Facebook } from "lucide-react";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
+import { motion } from "framer-motion";
 
 const HomeFooter = () => {
   const [email, setEmail] = useState("");
@@ -34,17 +35,36 @@ const HomeFooter = () => {
   return (
     <>
 
-      <div className="w-full bg-[#f6ecdf] py-12">
-        <h2 className="text-center font-mono font-bold tracking-widest text-xl sm:text-2xl md:text-3xl">
-          OUR PARTNERS
-        </h2>
+      <div className="w-full bg-[#f6ecdf] py-24 px-6 overflow-hidden">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center font-black tracking-tighter text-4xl sm:text-5xl md:text-6xl uppercase mb-16"
+        >
+          OUR <span className="text-orange-500">PARTNERS</span>
+        </motion.h2>
 
-        <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-8 items-center justify-items-center">
-          <Image src="/Asset/image.png" alt="Adidas" width={100} height={60} />
-          <Image src="/Asset/image2.png" alt="Nike" width={100} height={60} />
-          <Image src="/Asset/image3.png" alt="Puma" width={140} height={60} />
-          <Image src="/Asset/image4.png" alt="sketchers" width={100} height={60} />
-        </div>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-20 items-center justify-items-center opacity-40 hover:opacity-100 transition-opacity duration-700"
+        >
+          <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
+            <Image src="/Asset/image.png" alt="Adidas" width={120} height={80} className="object-contain" />
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
+            <Image src="/Asset/image2.png" alt="Nike" width={120} height={80} className="object-contain" />
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
+            <Image src="/Asset/image3.png" alt="Puma" width={160} height={80} className="object-contain" />
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
+            <Image src="/Asset/image4.png" alt="sketchers" width={120} height={80} className="object-contain" />
+          </motion.div>
+        </motion.div>
       </div>
 
 
