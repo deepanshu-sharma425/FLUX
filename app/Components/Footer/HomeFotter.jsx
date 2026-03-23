@@ -35,12 +35,12 @@ const HomeFooter = () => {
   return (
     <>
 
-      <div className="w-full bg-[#f6ecdf] py-24 px-6 overflow-hidden">
+      <div className="w-full bg-[#f6ecdf] py-16 sm:py-24 px-4 sm:px-6 overflow-hidden">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center font-black tracking-tighter text-4xl sm:text-5xl md:text-6xl uppercase mb-16"
+          className="text-center font-black tracking-tighter text-3xl sm:text-5xl md:text-6xl uppercase mb-12 sm:mb-16"
         >
           OUR <span className="text-orange-500">PARTNERS</span>
         </motion.h2>
@@ -50,49 +50,49 @@ const HomeFooter = () => {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-20 items-center justify-items-center opacity-40 hover:opacity-100 transition-opacity duration-700"
+          className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 md:gap-20 items-center justify-items-center opacity-40 hover:opacity-100 transition-opacity duration-700"
         >
           <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
-            <Image src="/Asset/image.png" alt="Adidas" width={120} height={80} className="object-contain" />
+            <Image src="/Asset/image.png" alt="Adidas" width={100} height={60} className="object-contain sm:w-[120px] sm:h-[80px]" />
           </motion.div>
           <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
-            <Image src="/Asset/image2.png" alt="Nike" width={120} height={80} className="object-contain" />
+            <Image src="/Asset/image2.png" alt="Nike" width={100} height={60} className="object-contain sm:w-[120px] sm:h-[80px]" />
           </motion.div>
           <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
-            <Image src="/Asset/image3.png" alt="Puma" width={160} height={80} className="object-contain" />
+            <Image src="/Asset/image3.png" alt="Puma" width={120} height={60} className="object-contain sm:w-[160px] sm:h-[80px]" />
           </motion.div>
           <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
-            <Image src="/Asset/image4.png" alt="sketchers" width={120} height={80} className="object-contain" />
+            <Image src="/Asset/image4.png" alt="sketchers" width={100} height={60} className="object-contain sm:w-[120px] sm:h-[80px]" />
           </motion.div>
         </motion.div>
       </div>
 
 
       <footer className="bg-black text-white font-mono">
-        <div className="max-w-7xl mx-auto px-6 py-16">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-10">
-            <div>
-              <h2 className="text-xl font-extrabold tracking-widest mb-4">FLUX</h2>
-              <p className="text-sm text-gray-400">
+        <div className="max-w-7xl mx-auto px-6 py-12 sm:py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10 sm:gap-12">
+            <div className="sm:col-span-2 md:col-span-1">
+              <h2 className="text-xl sm:text-2xl font-black tracking-tighter mb-4 sm:mb-6">FLUX</h2>
+              <p className="text-xs sm:text-sm text-gray-500 font-bold uppercase tracking-widest leading-relaxed">
                 Built from the streets. Designed for movement.
               </p>
             </div>
             <div>
-              <h3 className="text-sm font-semibold mb-4 tracking-widest">PRODUCTS</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>Streetwear</li>
-                <li>Hoodies</li>
-                <li>Shirts</li>
-                <li>Cargos</li>
-                <li className="text-orange-400">Sale</li>
+              <h3 className="text-[10px] sm:text-xs font-black mb-4 sm:mb-6 tracking-[0.2em] uppercase text-gray-400">Products</h3>
+              <ul className="space-y-2 sm:space-y-3 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-600">
+                <li className="hover:text-white transition-colors cursor-pointer">Streetwear</li>
+                <li className="hover:text-white transition-colors cursor-pointer">Hoodies</li>
+                <li className="hover:text-white transition-colors cursor-pointer">Shirts</li>
+                <li className="hover:text-white transition-colors cursor-pointer">Cargos</li>
+                <li className="text-orange-500 hover:text-orange-400 transition-colors cursor-pointer">Sale</li>
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold mb-4 tracking-widest">COLLECTIONS</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>Winter Drop ’25</li>
-                <li>United in Urban</li>
-                <li>Adrenaline Series</li>
+              <h3 className="text-[10px] sm:text-xs font-black mb-4 sm:mb-6 tracking-[0.2em] uppercase text-gray-400">Collections</h3>
+              <ul className="space-y-2 sm:space-y-3 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-600">
+                <li className="hover:text-white transition-colors cursor-pointer">Winter Drop ’25</li>
+                <li className="hover:text-white transition-colors cursor-pointer">United in Urban</li>
+                <li className="hover:text-white transition-colors cursor-pointer">Adrenaline Series</li>
               </ul>
             </div>
 

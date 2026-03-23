@@ -26,7 +26,7 @@ const Story = () => {
       </motion.div>
 
       {/* Content */}
-      <div className="relative z-10 flex items-center min-h-[85vh] sm:min-h-[100vh] px-6 sm:px-10 md:px-20 lg:px-40">
+      <div className="relative z-10 flex items-center min-h-[85vh] sm:min-h-[100vh] px-6 sm:px-10 md:px-20 lg:px-40 py-20">
         <div className="max-w-3xl text-white">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -34,12 +34,12 @@ const Story = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <p className="text-[10px] font-black tracking-[0.5em] text-orange-500 uppercase mb-4">Our DNA</p>
-            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] mb-8">
+            <p className="text-[8px] sm:text-[10px] font-black tracking-[0.5em] text-orange-500 uppercase mb-4">Our DNA</p>
+            <h1 className="text-4xl sm:text-7xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] mb-6 sm:mb-8">
               Built <br /> From the <br /> <span className="text-gray-400/50">Streets</span>
             </h1>
 
-            <div className="space-y-6 text-sm sm:text-base text-gray-300 leading-relaxed font-medium max-w-xl">
+            <div className="space-y-4 sm:space-y-6 text-xs sm:text-base text-gray-300 leading-relaxed font-medium max-w-xl">
               <p>
                 FLUX was born from movement — from the noise of the city, the grind
                 of concrete streets, and the people who choose momentum over comfort.
@@ -58,11 +58,11 @@ const Story = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5 }}
-              className="mt-12 flex items-center gap-6"
+              className="mt-8 sm:mt-12 flex items-center gap-4 sm:gap-6"
             >
-              <span className="text-2xl tracking-[0.5em] font-black">FLUX</span>
-              <div className="w-20 h-[1px] bg-white/20" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500">EST. 2026</span>
+              <span className="text-xl sm:text-2xl tracking-[0.3em] sm:tracking-[0.5em] font-black">FLUX</span>
+              <div className="w-12 sm:w-20 h-[1px] bg-white/20" />
+              <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500">EST. 2026</span>
             </motion.div>
           </motion.div>
         </div>

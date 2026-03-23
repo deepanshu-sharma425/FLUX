@@ -51,8 +51,9 @@ export default function FiltercoruselClient({ products }) {
     responsive: [
       { breakpoint: 1440, settings: { slidesToShow: 3.5, arrows: false } },
       { breakpoint: 1280, settings: { slidesToShow: 3, arrows: false } },
-      { breakpoint: 1024, settings: { slidesToShow: 2, arrows: false } },
-      { breakpoint: 640, settings: { slidesToShow: 1.2, arrows: false } },
+      { breakpoint: 1024, settings: { slidesToShow: 2.2, arrows: false } },
+      { breakpoint: 768, settings: { slidesToShow: 1.5, arrows: false } },
+      { breakpoint: 480, settings: { slidesToShow: 1.1, arrows: false } },
     ],
   };
 
@@ -63,26 +64,26 @@ export default function FiltercoruselClient({ products }) {
   ];
 
   return (
-    <section className="bg-[#f6ecdf] py-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
+    <section className="bg-[#f6ecdf] py-12 sm:py-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8 mb-10 sm:mb-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter uppercase leading-tight">
               Curated <span className="text-orange-500">Selection</span>
             </h2>
-            <p className="text-gray-500 mt-2 text-sm font-bold uppercase tracking-widest">Handpicked for the streets</p>
+            <p className="text-gray-500 mt-2 text-[10px] sm:text-sm font-bold uppercase tracking-widest">Handpicked for the streets</p>
           </motion.div>
 
-          <div className="flex gap-2 p-1 bg-black/5 rounded-[20px] self-start">
+          <div className="flex gap-1.5 p-1 bg-black/5 rounded-[20px] self-start overflow-x-auto no-scrollbar max-w-full">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
                 onClick={() => setSelectedTab(tab.key)}
-                className={`px-6 py-3 rounded-[16px] text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                className={`whitespace-nowrap px-4 sm:px-6 py-2.5 sm:py-3 rounded-[16px] text-[8px] sm:text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
                   selectedTab === tab.key
                     ? "bg-black text-white shadow-lg"
                     : "text-gray-500 hover:text-black"
