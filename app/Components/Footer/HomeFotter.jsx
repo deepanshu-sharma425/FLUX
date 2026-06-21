@@ -12,144 +12,162 @@ const HomeFooter = () => {
   const handleSubscribe = async (e) => {
     e.preventDefault();
     if (!email) return;
-
     setStatus("loading");
-
     try {
       await emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        {
-          user_email: email, 
-        },
+        { user_email: email },
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
       );
-
       setStatus("success");
       setEmail("");
-    } catch (err) {
+    } catch {
       setStatus("error");
     }
   };
 
   return (
     <>
-
-      <div className="w-full bg-[#f6ecdf] py-16 sm:py-24 px-4 sm:px-6 overflow-hidden">
-        <motion.h2 
+      {/* Partners strip */}
+      <div className="w-full bg-[#f6ecdf] py-14 sm:py-24 px-4 sm:px-6 overflow-hidden">
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center font-black tracking-tighter text-3xl sm:text-5xl md:text-6xl uppercase mb-12 sm:mb-16"
+          className="text-center font-black tracking-tighter text-3xl sm:text-5xl md:text-6xl uppercase mb-10 sm:mb-16"
         >
           OUR <span className="text-orange-500">PARTNERS</span>
         </motion.h2>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
           viewport={{ once: true }}
-          className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 md:gap-20 items-center justify-items-center opacity-40 hover:opacity-100 transition-opacity duration-700"
+          className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-12 items-center justify-items-center opacity-40 hover:opacity-100 transition-opacity duration-700"
         >
-          <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
-            <Image src="/Asset/image.png" alt="Adidas" width={100} height={60} className="object-contain sm:w-[120px] sm:h-[80px]" />
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
-            <Image src="/Asset/image2.png" alt="Nike" width={100} height={60} className="object-contain sm:w-[120px] sm:h-[80px]" />
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
-            <Image src="/Asset/image3.png" alt="Puma" width={120} height={60} className="object-contain sm:w-[160px] sm:h-[80px]" />
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.1, filter: "grayscale(0%)" }} className="grayscale transition-all duration-500">
-            <Image src="/Asset/image4.png" alt="sketchers" width={100} height={60} className="object-contain sm:w-[120px] sm:h-[80px]" />
-          </motion.div>
+          {[
+            { src: "/Asset/image.png", alt: "Adidas", w: 100, h: 60 },
+            { src: "/Asset/image2.png", alt: "Nike", w: 100, h: 60 },
+            { src: "/Asset/image3.png", alt: "Puma", w: 120, h: 60 },
+            { src: "/Asset/image4.png", alt: "Skechers", w: 100, h: 60 },
+          ].map(({ src, alt, w, h }) => (
+            <motion.div
+              key={alt}
+              whileHover={{ scale: 1.1 }}
+              className="grayscale hover:grayscale-0 transition-all duration-500"
+            >
+              <Image src={src} alt={alt} width={w} height={h} className="object-contain w-20 sm:w-28 h-auto" />
+            </motion.div>
+          ))}
         </motion.div>
       </div>
 
-
-      <footer className="bg-black text-white font-mono">
-        <div className="max-w-7xl mx-auto px-6 py-12 sm:py-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10 sm:gap-12">
-            <div className="sm:col-span-2 md:col-span-1">
-              <h2 className="text-xl sm:text-2xl font-black tracking-tighter mb-4 sm:mb-6">FLUX</h2>
-              <p className="text-xs sm:text-sm text-gray-500 font-bold uppercase tracking-widest leading-relaxed">
-                Built from the streets. Designed for movement.
+      {/* Footer */}
+      <footer className="bg-black text-white">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-12 sm:py-16">
+          {/* Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-8 sm:gap-10">
+            {/* Brand */}
+            <div className="col-span-2 md:col-span-1">
+              <h2 className="text-xl sm:text-2xl font-black tracking-tighter mb-3 sm:mb-5">FLUX</h2>
+              <p className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase tracking-widest leading-relaxed">
+                Built from the streets.{" "}
+                <span className="block">Designed for movement.</span>
               </p>
             </div>
+
+            {/* Products */}
             <div>
-              <h3 className="text-[10px] sm:text-xs font-black mb-4 sm:mb-6 tracking-[0.2em] uppercase text-gray-400">Products</h3>
-              <ul className="space-y-2 sm:space-y-3 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-600">
-                <li className="hover:text-white transition-colors cursor-pointer">Streetwear</li>
-                <li className="hover:text-white transition-colors cursor-pointer">Hoodies</li>
-                <li className="hover:text-white transition-colors cursor-pointer">Shirts</li>
-                <li className="hover:text-white transition-colors cursor-pointer">Cargos</li>
+              <h3 className="text-[10px] sm:text-xs font-black mb-4 sm:mb-5 tracking-[0.2em] uppercase text-gray-400">
+                Products
+              </h3>
+              <ul className="space-y-2.5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-600">
+                {["Streetwear", "Hoodies", "Shirts", "Cargos"].map((item) => (
+                  <li key={item} className="hover:text-white transition-colors cursor-pointer">
+                    {item}
+                  </li>
+                ))}
                 <li className="text-orange-500 hover:text-orange-400 transition-colors cursor-pointer">Sale</li>
               </ul>
             </div>
+
+            {/* Collections */}
             <div>
-              <h3 className="text-[10px] sm:text-xs font-black mb-4 sm:mb-6 tracking-[0.2em] uppercase text-gray-400">Collections</h3>
-              <ul className="space-y-2 sm:space-y-3 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-600">
-                <li className="hover:text-white transition-colors cursor-pointer">Winter Drop ’25</li>
-                <li className="hover:text-white transition-colors cursor-pointer">United in Urban</li>
-                <li className="hover:text-white transition-colors cursor-pointer">Adrenaline Series</li>
+              <h3 className="text-[10px] sm:text-xs font-black mb-4 sm:mb-5 tracking-[0.2em] uppercase text-gray-400">
+                Collections
+              </h3>
+              <ul className="space-y-2.5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-600">
+                {["Winter Drop '25", "United in Urban", "Adrenaline Series"].map((item) => (
+                  <li key={item} className="hover:text-white transition-colors cursor-pointer">
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
 
-
+            {/* Support */}
             <div>
-              <h3 className="text-sm font-semibold mb-4 tracking-widest">SUPPORT</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>Help Center</li>
-                <li>Returns</li>
-                <li>Shipping</li>
+              <h3 className="text-[10px] sm:text-xs font-black mb-4 sm:mb-5 tracking-[0.2em] uppercase text-gray-400">
+                Support
+              </h3>
+              <ul className="space-y-2.5 text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-600">
+                {["Help Center", "Returns", "Shipping"].map((item) => (
+                  <li key={item} className="hover:text-white transition-colors cursor-pointer">
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
-            <div>
-              <h3 className="text-sm font-semibold mb-4 tracking-widest">
-                STAY CONNECTED
+
+            {/* Newsletter + Social */}
+            <div className="col-span-2 sm:col-span-1">
+              <h3 className="text-[10px] sm:text-xs font-black mb-4 sm:mb-5 tracking-[0.2em] uppercase text-gray-400">
+                Stay Connected
               </h3>
 
-              <form onSubmit={handleSubscribe} className="flex">
+              <form onSubmit={handleSubscribe} className="flex rounded-xl overflow-hidden border border-white/10 mb-3">
                 <input
                   type="email"
                   required
                   placeholder="Email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 text-black bg-[#f6ecdf] outline-none"
+                  className="flex-1 px-3 py-2.5 text-[11px] text-black bg-[#f6ecdf] outline-none placeholder:text-gray-500 min-w-0"
                 />
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="px-4 bg-orange-400 text-black font-semibold hover:bg-white transition"
+                  className="px-4 py-2.5 bg-orange-500 text-white text-xs font-black hover:bg-orange-400 transition-colors shrink-0 disabled:opacity-60"
                 >
                   →
                 </button>
               </form>
 
               {status === "success" && (
-                <p className="text-green-500 text-xs mt-2">
-                  Thanks for subscribing ⚡
-                </p>
+                <p className="text-green-400 text-[10px] font-bold mb-3">Thanks for subscribing ⚡</p>
               )}
-
               {status === "error" && (
-                <p className="text-red-500 text-xs mt-2">
-                  Something went wrong.
-                </p>
+                <p className="text-red-400 text-[10px] font-bold mb-3">Something went wrong. Try again.</p>
               )}
 
-              <div className="flex gap-4 mt-6 text-gray-400">
-                <Instagram />
-                <Twitter />
-                <Youtube />
-                <Facebook />
+              <div className="flex gap-4 mt-4 text-gray-500">
+                {[Instagram, Twitter, Youtube, Facebook].map((Icon, i) => (
+                  <button
+                    key={i}
+                    className="hover:text-white transition-colors"
+                    aria-label="Social link"
+                  >
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </button>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="border-t border-white/10 mt-16 pt-6 flex justify-between text-xs text-gray-500">
+          {/* Bottom bar */}
+          <div className="border-t border-white/10 mt-12 sm:mt-16 pt-5 flex flex-col sm:flex-row justify-between gap-2 text-[10px] text-gray-600 font-bold uppercase tracking-widest">
             <span>© {new Date().getFullYear()} FLUX</span>
             <span>Built for motion.</span>
           </div>

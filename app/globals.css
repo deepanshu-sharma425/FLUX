@@ -1,62 +1,67 @@
 @import "tailwindcss";
-html,body{
-  background-color: #f7ecdf; 
+
+html, body {
+  background-color: #f7ecdf;
 }
+
+/* ─── Fonts ──────────────────────────────────────────── */
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Ultralight.otf") format("opentype");
   font-weight: 200;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Thin.otf") format("opentype");
   font-weight: 100;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Light.otf") format("opentype");
   font-weight: 300;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Regular.otf") format("opentype");
   font-weight: 400;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Medium.otf") format("opentype");
   font-weight: 500;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Semibold.otf") format("opentype");
   font-weight: 600;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Bold.otf") format("opentype");
   font-weight: 700;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Heavy.otf") format("opentype");
   font-weight: 800;
 }
+
 html,
 body {
   font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
 }
 
+/* ─── Scrollbar helpers ────────────────────────────── */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
-
+/* ─── Slick carousel base ─────────────────────────── */
 .slick-slider {
   position: relative;
   width: 100%;
@@ -80,11 +85,11 @@ body {
   height: 100%;
 }
 
-
+/* ─── Slick arrows ────────────────────────────────── */
 .slick-prev,
 .slick-next {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   background: #111111;
   border-radius: 9999px;
   z-index: 40;
@@ -95,30 +100,60 @@ body {
 
 .slick-prev:before,
 .slick-next:before {
-  font-size: 22px;
+  font-size: 20px;
   color: #ffffff;
   opacity: 1;
 }
-.slick-prev {
-  left: 8px;
-}
 
-.slick-next {
-  right: 8px;
-}
+.slick-prev { left: 8px; }
+.slick-next { right: 8px; }
 
 .slick-prev:hover,
 .slick-next:hover {
   background: #FF8A00;
 }
 
-
-@media (max-width: 640px) {
+/* Hide default slick arrows on mobile – we use custom ones */
+@media (max-width: 1024px) {
   .slick-prev,
   .slick-next {
-    display: none !important; 
+    display: none !important;
   }
 }
+
+/* ─── Custom carousel dots ────────────────────────── */
+.flux-dots {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px 0 4px;
+  list-style: none;
+  margin: 0;
+}
+
+.flux-dots li {
+  margin: 0;
+}
+
+.flux-dots li button {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #d1c9bf;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.3s ease, background 0.3s ease;
+  font-size: 0;
+}
+
+.flux-dots li.slick-active button {
+  width: 20px;
+  background: #111111;
+}
+
+/* ─── Input base style ────────────────────────────── */
 .input {
   width: 100%;
   padding: 0.75rem 1rem;
