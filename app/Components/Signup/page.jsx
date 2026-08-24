@@ -73,10 +73,13 @@ export default function Signup() {
     }
   };
 
+  const handleGoogleSignup = () => {
+    window.location.href = "/api/auth/google";
+  };
+
   return (
     <section className="min-h-screen flex items-center justify-center bg-[#f6ecdf] px-4">
       <div className="w-full max-w-md bg-[#f2efe9] rounded-2xl p-6 sm:p-8 shadow-sm">
-
 
         <h1 className="text-3xl font-black tracking-widest text-center mb-2">
           FLUX
@@ -85,13 +88,11 @@ export default function Signup() {
           Create your account and join the movement.
         </p>
 
-
         {error && (
           <p className="text-red-600 text-sm text-center mb-4">
             {error}
           </p>
         )}
-
 
         <form className="space-y-4" onSubmit={handleSignup}>
           <input
@@ -130,19 +131,33 @@ export default function Signup() {
           </button>
         </form>
 
-     
+        {/* Separator */}
+        <div className="flex items-center gap-4 my-6">
+          <div className="flex-1 h-px bg-gray-300" />
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">or</span>
+          <div className="flex-1 h-px bg-gray-300" />
+        </div>
+
+        {/* Google Sign-Up Button */}
+        <button
+          onClick={handleGoogleSignup}
+          className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-gray-300 rounded-full bg-white hover:border-black hover:shadow-md transition-all duration-300 group"
+        >
+          <Image src="/Asset/google.png" width={20} height={20} alt="Google" />
+          <span className="font-semibold text-sm text-gray-700 group-hover:text-black transition-colors">
+            Continue with Google
+          </span>
+        </button>
+
         <div className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <Link href="/Components/login" className="font-semibold text-black hover:underline">
             Login
           </Link>
         </div>
-        <div className="mt-4 text-center">
-          <div className="px-8 border rounded-2xl flex gap-2 items-center justify-center mx-auto w-fit py-2 cursor-pointer hover:bg-gray-200 transition">
-            <div>Signup with Google</div>
-            <Image src={'/Asset/google.png'} width={20} height={20} alt="google svg"/>
-          </div>
-          <Link href="/" className="text-sm text-gray-600 pt-3 hover:underline">
+
+        <div className="mt-3 text-center">
+          <Link href="/" className="text-sm text-gray-600 hover:underline">
             Back to Home
           </Link>
         </div>

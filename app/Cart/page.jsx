@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { TOKEN_NAME, verifyAuthToken } from "../../lib/jwt";
 import Image from "next/image";
 import Link from "next/link";
+import CartClient from "./CartClient";
 
 export default async function CartPage() {
   const cookieStore = await cookies();
@@ -36,11 +37,16 @@ export default async function CartPage() {
     );
   }
 
-  const items = await prisma.cartItem.findMany({
-    where: { userId: payload.userId },
-    include: { cloth: true },
-    orderBy: { createdAt: "desc" },
-  });
+  let items = [];
+  try {
+    items = await prisma.cartItem.findMany({
+      where: { userId: payload.userId },
+      include: { cloth: true },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (error) {
+    console.error("Failed to fetch cart items:", error);
+  }
 
   const total = items.reduce(
     (sum, item) => sum + item.quantity * item.cloth.finalPrice,
@@ -70,70 +76,7 @@ export default async function CartPage() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
-              <div className="space-y-4">
-                {items.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex gap-4 bg-[#f2efe9] rounded-xl p-4"
-                  >
-                    <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-white shrink-0">
-                      <Image
-                        src={item.cloth.image}
-                        alt={item.cloth.name}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-
-                    <div className="flex-1 space-y-1">
-                      <h2 className="text-sm font-bold uppercase tracking-wide">
-                        {item.cloth.name}
-                      </h2>
-                      <p className="text-xs text-gray-600 line-clamp-2">
-                        {item.cloth.description}
-                      </p>
-                      <p className="text-xs text-gray-600">
-                        Size: <span className="font-semibold">{item.size}</span>{" "}
-                        · Color:{" "}
-                        <span className="font-semibold">
-                          {item.color || item.cloth.color}
-                        </span>
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col items-end justify-between">
-                      <p className="text-sm font-semibold">
-                        Qty: {item.quantity}
-                      </p>
-                      <p className="text-sm font-bold">
-                        ₹{item.quantity * item.cloth.finalPrice}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="bg-[#f2efe9] rounded-2xl p-6 h-fit">
-                <h2 className="text-lg font-bold mb-4">Order Summary</h2>
-                <div className="flex justify-between text-sm mb-2">
-                  <span>Items</span>
-                  <span>{items.length}</span>
-                </div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span>Subtotal</span>
-                  <span>₹{total}</span>
-                </div>
-                <div className="border-t border-gray-300 my-4" />
-                <div className="flex justify-between text-base font-bold mb-4">
-                  <span>Total</span>
-                  <span>₹{total}</span>
-                </div>
-                <button className="w-full py-3 rounded-full bg-black text-white text-sm font-semibold hover:bg-[#FF8A00] transition">
-                  Checkout
-                </button>
-              </div>
-            </div>
+            <CartClient initialItems={items} total={total} />
           )}
         </div>
       </section>

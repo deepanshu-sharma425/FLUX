@@ -24,7 +24,7 @@ export function FramerPage({ children }) {
           type: "spring",
           stiffness: 260,
           damping: 20,
-          duration: 0.5,
+          duration: 0.3,
         }}
         className="w-full min-h-screen"
       >

@@ -10,8 +10,10 @@ datasource db {
 model User {
   id        String     @id @default(uuid())
   email     String     @unique
-  password  String
+  password  String?
   name      String
+  googleId  String?    @unique
+  avatar    String?
   addresses Address[]
   cartItems CartItem[]
   orders    Order[]
@@ -88,16 +90,18 @@ model Address {
 }
 
 model Order {
-  id          String      @id @default(uuid())
-  totalAmount Int
-  status      OrderStatus
-  paymentMode PaymentMode
-  userId      String
-  addressId   Int
-  createdAt   DateTime    @default(now())
-  address     Address     @relation(fields: [addressId], references: [id])
-  user        User        @relation(fields: [userId], references: [id])
-  items       OrderItem[]
+  id              String      @id @default(uuid())
+  totalAmount     Int
+  status          OrderStatus
+  paymentMode     PaymentMode
+  paymentId       String?
+  razorpayOrderId String?
+  userId          String
+  addressId       Int
+  createdAt       DateTime    @default(now())
+  address         Address     @relation(fields: [addressId], references: [id])
+  user            User        @relation(fields: [userId], references: [id])
+  items           OrderItem[]
 }
 
 model OrderItem {

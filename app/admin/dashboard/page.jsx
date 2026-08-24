@@ -1,8 +1,10 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import AdminOrders from "./AdminOrders";
 
 export default function AdminDashboard() {
+  const [activeTab, setActiveTab] = useState("products"); // "products" or "orders"
   const initialFormState = {
     name: "",
     category: "",
@@ -93,184 +95,252 @@ export default function AdminDashboard() {
 
   return (
     <main className="min-h-screen bg-[#f6ecdf] px-4 md:px-8 py-10">
-      <div className="max-w-7xl mx-auto mb-8 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto mb-10 flex flex-wrap justify-between items-end gap-6">
         <div>
-          <h1 className="text-4xl font-black">Admin Dashboard</h1>
-          <p className="text-gray-600 mt-1">Add and manage products</p>
+          <h1 className="text-5xl font-black uppercase tracking-tighter">Admin Dashboard</h1>
+          <div className="flex gap-6 mt-4">
+            <button
+              onClick={() => setActiveTab("products")}
+              className={`text-sm font-black uppercase tracking-widest pb-1 transition-all border-b-2 ${
+                activeTab === "products" ? "border-black text-black" : "border-transparent text-gray-400 hover:text-black"
+              }`}
+            >
+              Add Products
+            </button>
+            <button
+              onClick={() => setActiveTab("orders")}
+              className={`text-sm font-black uppercase tracking-widest pb-1 transition-all border-b-2 ${
+                activeTab === "orders" ? "border-black text-black" : "border-transparent text-gray-400 hover:text-black"
+              }`}
+            >
+              Manage Orders
+            </button>
+          </div>
         </div>
-        <Link href="/products" className="text-sm underline">
-          View products
+        <Link href="/products" className="text-xs font-bold underline uppercase tracking-widest hover:text-orange-500 transition-colors">
+          View Public Site →
         </Link>
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-7xl mx-auto bg-[#f2efe9] rounded-2xl p-6 md:p-10 space-y-10"
-      >
-
-        <section>
-          <h2 className="section-title">Basic Information</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <input
-              name="name"
-              value={form.name}
-              placeholder="Product name"
-              onChange={handleChange}
-              className="input"
-              required
-            />
-            <input
-              name="category"
-              value={form.category}
-              placeholder="Category"
-              onChange={handleChange}
-              className="input"
-              required
-            />
-          </div>
-
-          <textarea
-            name="description"
-            value={form.description}
-            placeholder="Product description"
-            onChange={handleChange}
-            className="input mt-6"
-            rows={3}
-            required
-          />
-        </section>
-
-       
-        <section>
-          <h2 className="section-title">Pricing</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <input
-              name="price"
-              value={form.price}
-              placeholder="Price"
-              onChange={handleChange}
-              className="input"
-              required
-            />
-            <input
-              name="discount"
-              value={form.discount}
-              placeholder="Discount %"
-              onChange={handleChange}
-              className="input"
-              required
-            />
-            <input
-              name="finalPrice"
-              value={form.finalPrice}
-              placeholder="Final price"
-              onChange={handleChange}
-              className="input"
-              required
-            />
-          </div>
-        </section>
-
-
-        <section>
-          <h2 className="section-title">Meta</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <input
-              name="sizes"
-              value={form.sizes}
-              placeholder="Sizes (7,8,9)"
-              onChange={handleChange}
-              className="input"
-              required
-            />
-            <select
-              name="sex"
-              value={form.sex}
-              onChange={handleChange}
-              className="input"
-              required
-            >
-              <option>Male</option>
-              <option>Female</option>
-              <option>Unisex</option>
-            </select>
-            <input
-              name="about"
-              value={form.about}
-              placeholder="About (latest / trending)"
-              onChange={handleChange}
-              className="input"
-              required
-            />
-          </div>
-        </section>
-
-
-        <section>
-          <h2 className="section-title">Product Image</h2>
-          <input type="file" accept="image/*" onChange={handleImageChange} required/>
-          {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="mt-4 w-40 h-40 object-cover rounded-xl border"
-            />
-          )}
-        </section>
-
-
-        <section>
-          <h2 className="section-title">Color</h2>
-          <div className="flex items-center gap-4">
-            <input
-              name="color"
-              value={form.color}
-              placeholder="#cc2424"
-              onChange={handleChange}
-              className="input w-40"
-              required
-            />
-            {form.color && (
-              <div
-                className="w-10 h-10 rounded border"
-                style={{ backgroundColor: form.color }}
-              />
+      <div className="max-w-7xl mx-auto">
+        {activeTab === "products" ? (
+          <form
+            onSubmit={handleSubmit}
+            className="bg-[#f2efe9] rounded-3xl p-6 md:p-12 space-y-12 shadow-sm border border-black/5"
+          >
+            {message && (
+              <div className={`p-4 rounded-2xl text-sm font-bold uppercase tracking-widest text-center ${
+                message.includes("success") ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+              }`}>
+                {message}
+              </div>
             )}
-          </div>
-        </section>
+            
+            <section>
+              <h2 className="text-xl font-black uppercase tracking-widest mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs">01</span>
+                Basic Information
+              </h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Product Name</label>
+                  <input
+                    name="name"
+                    value={form.name}
+                    placeholder="e.g. Oversized Heavy Hoodie"
+                    onChange={handleChange}
+                    className="input-v2"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Category</label>
+                  <input
+                    name="category"
+                    value={form.category}
+                    placeholder="e.g. Winter / Streetwear"
+                    onChange={handleChange}
+                    className="input-v2"
+                    required
+                  />
+                </div>
+              </div>
 
+              <div className="mt-8 space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Product Description</label>
+                <textarea
+                  name="description"
+                  value={form.description}
+                  placeholder="Tell the story behind this piece..."
+                  onChange={handleChange}
+                  className="input-v2"
+                  rows={3}
+                  required
+                />
+              </div>
+            </section>
 
-        <section>
-          <h2 className="section-title">Details</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <input
-              name="material"
-              value={form.material}
-              placeholder="Material"
-              onChange={handleChange}
-              className="input"
-              required
-            />
-            <input
-              name="fit"
-              value={form.fit}
-              placeholder="Fit"
-              onChange={handleChange}
-              className="input"
-              required
-            />
-          </div>
-        </section>
+            <section>
+              <h2 className="text-xl font-black uppercase tracking-widest mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs">02</span>
+                Pricing Details
+              </h2>
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Base Price (₹)</label>
+                  <input
+                    name="price"
+                    value={form.price}
+                    placeholder="2999"
+                    onChange={handleChange}
+                    className="input-v2"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Discount (%)</label>
+                  <input
+                    name="discount"
+                    value={form.discount}
+                    placeholder="10"
+                    onChange={handleChange}
+                    className="input-v2"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Final Price (₹)</label>
+                  <input
+                    name="finalPrice"
+                    value={form.finalPrice}
+                    placeholder="2699"
+                    onChange={handleChange}
+                    className="input-v2 font-bold text-orange-600"
+                    required
+                  />
+                </div>
+              </div>
+            </section>
 
-        <button
-          disabled={loading}
-          className="w-full bg-black text-white py-4 rounded-xl font-semibold hover:opacity-90 transition disabled:opacity-60"
-        >
-          {loading ? "Adding product..." : "Add Cloth"}
-        </button>
+            <section>
+              <h2 className="text-xl font-black uppercase tracking-widest mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs">03</span>
+                Product Attributes
+              </h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Sizes (Comma Separated)</label>
+                  <input
+                    name="sizes"
+                    value={form.sizes}
+                    placeholder="S, M, L, XL"
+                    onChange={handleChange}
+                    className="input-v2"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Gender</label>
+                  <select
+                    name="sex"
+                    value={form.sex}
+                    onChange={handleChange}
+                    className="input-v2 bg-white"
+                    required
+                  >
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Unisex</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Primary Color</label>
+                  <input
+                    name="color"
+                    value={form.color}
+                    placeholder="Obsidian Black"
+                    onChange={handleChange}
+                    className="input-v2"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">Material / Fit</label>
+                  <input
+                    name="material"
+                    value={form.material}
+                    placeholder="Cotton / Oversized"
+                    onChange={handleChange}
+                    className="input-v2"
+                    required
+                  />
+                </div>
+              </div>
+            </section>
 
-        {message && <p className="text-center font-medium">{message}</p>}
-      </form>
+            <section>
+              <h2 className="text-xl font-black uppercase tracking-widest mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs">04</span>
+                Media & Extras
+              </h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <div className="flex flex-col items-center justify-center border-2 border-dashed border-black/10 rounded-3xl p-8 hover:bg-white/50 transition-colors cursor-pointer relative min-h-[200px]">
+                    {imagePreview ? (
+                      <img src={imagePreview} alt="Preview" className="max-h-[180px] object-contain rounded-xl" />
+                    ) : (
+                      <div className="text-center">
+                        <p className="text-xs font-black uppercase tracking-widest text-gray-400">Upload Product Image</p>
+                        <p className="text-[10px] text-gray-300 mt-2 uppercase">PNG, JPG up to 5MB</p>
+                      </div>
+                    )}
+                    <input
+                      type="file"
+                      onChange={handleImageChange}
+                      className="absolute inset-0 opacity-0 cursor-pointer"
+                      required={!imagePreview}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-8">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-4">About Label (latest / trending)</label>
+                    <input
+                      name="about"
+                      value={form.about}
+                      placeholder="e.g. LIMITED DROP"
+                      onChange={handleChange}
+                      className="input-v2"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-6 bg-black text-white rounded-full font-black text-lg uppercase tracking-[0.2em] hover:bg-orange-600 transition-all duration-500 shadow-xl shadow-black/10 flex items-center justify-center gap-4 disabled:opacity-50"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-6 h-6 animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      "Release Product"
+                    )}
+                  </button>
+                </div>
+              </div>
+            </section>
+          </form>
+        ) : (
+          <AdminOrders />
+        )}
+      </div>
     </main>
   );
 }
+
+const Loader2 = ({ className }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+  </svg>
+);

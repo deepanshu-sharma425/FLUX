@@ -35,9 +35,14 @@ export default async function AccountPage() {
     );
   }
 
-  const user = await prisma.user.findUnique({
-    where: { id: payload.userId },
-  });
+  let user = null;
+  try {
+    user = await prisma.user.findUnique({
+      where: { id: payload.userId },
+    });
+  } catch (error) {
+    console.error("Failed to fetch user:", error);
+  }
 
   if (!user) {
     return (

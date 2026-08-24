@@ -1,4 +1,23 @@
 @import "tailwindcss";
+
+@layer base {
+  *,
+  ::after,
+  ::before {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer components {
+  .input-v2 {
+    @apply w-full px-6 py-4 rounded-2xl bg-white border border-black/5 focus:border-black/20 focus:ring-1 focus:ring-black/5 outline-none transition-all duration-300 text-sm font-bold placeholder:text-gray-300;
+  }
+}
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
 html,body{
   background-color: #f7ecdf; 
 }
