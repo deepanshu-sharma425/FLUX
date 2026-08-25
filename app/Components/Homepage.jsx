@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowBigRight } from "lucide-react";
 import Image from "next/image";
 import { Suspense } from "react";
@@ -5,15 +7,13 @@ import Corusel from "./Corusel/Corusel";
 import CoruselSkeleton from "./Corusel/CoruselSkeleton";
 import Filtercorusel from "./Corusel/Filtercorusel";
 import Story from "./Story";
-
 import HomeFooter from "./Footer/HomeFotter";
+import ScrollReveal from "./ScrollReveal";
+import Link from "next/link";
 
 const Homepage = () => {
-  
-
   return (
     <>
-
       <section
         className="
           relative overflow-hidden font-[SF_Pro_Display]
@@ -21,7 +21,7 @@ const Homepage = () => {
           sm:min-h-[100svh]
         "
       >
-
+        {/* FLUX Background Letters */}
         <h1
           className="
             hidden sm:flex
@@ -41,7 +41,6 @@ const Homepage = () => {
           <span>X</span>
         </h1>
 
-      
         <div
           className="
             relative z-20
@@ -50,70 +49,86 @@ const Homepage = () => {
             px-4
           "
         >
-   
-          <Image
-            src="/Asset/hero.png"
-            alt="Flux Collection"
-            width={1100}
-            height={900}
-            priority
-            className="
-              w-full
-              max-w-[240px]
-              sm:max-w-[420px]
-              md:max-w-[650px]
-              lg:max-w-[900px]
-              xl:max-w-[1100px]
-              object-contain
-            "
-          />
-
-
-          <div className="mt-5 sm:mt-8 text-center">
-            <h2 className="text-base sm:text-xl md:text-3xl font-extrabold tracking-wide">
-              WINTER COLLECTION DROP
-            </h2>
-
-            <p className="mt-2 text-[0.6rem] sm:text-xs md:text-sm tracking-[0.25em] opacity-70 font-medium">
-              UNITED IN URBAN
-            </p>
-          </div>
-
-
-          <div className="mt-5 sm:mt-8">
-            <div
+          {/* Hero Image with scroll animation */}
+          <ScrollReveal variant="scaleIn" duration={0.9}>
+            <Image
+              src="/Asset/hero.png"
+              alt="Flux Collection"
+              width={1100}
+              height={900}
+              priority
               className="
-                group flex items-center justify-center gap-2
-                px-5 py-2.5 sm:px-6 sm:py-3
-                rounded-full
-                bg-orange-400
-                hover:bg-zinc-900
-                transition-all duration-300
-                cursor-pointer
+                w-full
+                max-w-[240px]
+                sm:max-w-[420px]
+                md:max-w-[650px]
+                lg:max-w-[900px]
+                xl:max-w-[1100px]
+                object-contain
               "
-            >
-              <span className="text-xs sm:text-sm md:text-base text-black group-hover:text-white font-medium tracking-wide transition-colors duration-300 whitespace-nowrap">
-                Shop the Winter Collection
-              </span>
+            />
+          </ScrollReveal>
 
-              <ArrowBigRight
-                className="
-                  w-4 h-4 sm:w-5 sm:h-5
-                  text-black group-hover:text-white
-                  transition-all duration-300
-                  group-hover:translate-x-1
-                "
-              />
+          {/* Hero Text */}
+          <ScrollReveal variant="fadeUp" delay={0.3} duration={0.7}>
+            <div className="mt-5 sm:mt-8 text-center">
+              <h2 className="text-base sm:text-xl md:text-3xl font-extrabold tracking-wide">
+                WINTER COLLECTION DROP
+              </h2>
+              <p className="mt-2 text-[0.6rem] sm:text-xs md:text-sm tracking-[0.25em] opacity-70 font-medium">
+                UNITED IN URBAN
+              </p>
             </div>
-          </div>
+          </ScrollReveal>
+
+          {/* CTA Button with glassmorphism */}
+          <ScrollReveal variant="fadeUp" delay={0.5} duration={0.7}>
+            <div className="mt-5 sm:mt-8">
+              <Link href="/AllCloth">
+                <div
+                  className="
+                    group flex items-center justify-center gap-2
+                    px-5 py-2.5 sm:px-6 sm:py-3
+                    rounded-full
+                    bg-orange-400
+                    hover:bg-zinc-900
+                    transition-all duration-300
+                    cursor-pointer
+                    shadow-lg hover:shadow-2xl
+                    hover:shadow-orange-500/20
+                  "
+                >
+                  <span className="text-xs sm:text-sm md:text-base text-black group-hover:text-white font-medium tracking-wide transition-colors duration-300 whitespace-nowrap">
+                    Shop the Winter Collection
+                  </span>
+                  <ArrowBigRight
+                    className="
+                      w-4 h-4 sm:w-5 sm:h-5
+                      text-black group-hover:text-white
+                      transition-all duration-300
+                      group-hover:translate-x-1
+                    "
+                  />
+                </div>
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
-      <Suspense fallback={<CoruselSkeleton />}>
-        <Corusel />
-      </Suspense>
-      <Filtercorusel/>
-      <Story/>
-      <HomeFooter/>
+
+      {/* Carousel sections */}
+      <ScrollReveal variant="fadeUp" delay={0.1}>
+        <Suspense fallback={<CoruselSkeleton />}>
+          <Corusel />
+        </Suspense>
+      </ScrollReveal>
+
+      <ScrollReveal variant="blurIn" delay={0.1}>
+        <Filtercorusel />
+      </ScrollReveal>
+
+      <Story />
+      <HomeFooter />
     </>
   );
 };

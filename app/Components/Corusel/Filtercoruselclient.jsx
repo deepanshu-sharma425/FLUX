@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import { Heart } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -38,28 +38,44 @@ export default function FiltercoruselClient({ products }) {
   const isEmpty = !products || products.length === 0;
   const skeletonItems = [1, 2, 3, 4];
 
+  const tabs = [
+    { key: "latest", label: "Latest Arrivals" },
+    { key: "bestsellers", label: "Best Sellers" },
+    { key: "sale", label: "Sale" },
+  ];
+
   return (
     <section className="bg-[#f6ecdf] py-6 md:py-10">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex gap-2 mb-6 md:justify-center overflow-x-auto">
-          {[
-            { key: "latest", label: "Latest Arrivals" },
-            { key: "bestsellers", label: "Best Sellers" },
-            { key: "sale", label: "Sale" },
-          ].map((tab) => (
+        {/* Animated Tab Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex gap-2 mb-6 md:justify-center overflow-x-auto"
+        >
+          {tabs.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setSelectedTab(tab.key)}
-              className={`px-4 py-2 border font-bold ${
+              className={`relative px-4 py-2 font-bold transition-all duration-300 ${
                 selectedTab === tab.key
                   ? "bg-black text-white"
-                  : "bg-transparent text-black"
+                  : "bg-transparent text-black hover:bg-black/5"
               }`}
             >
               {tab.label}
+              {selectedTab === tab.key && (
+                <motion.div
+                  layoutId="activeTab"
+                  className="absolute inset-0 bg-black -z-10"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+              )}
             </button>
           ))}
-        </div>
+        </motion.div>
 
         {isEmpty ? (
           <Slider {...settings}>
@@ -77,42 +93,85 @@ export default function FiltercoruselClient({ products }) {
             ))}
           </Slider>
         ) : (
-          <Slider {...settings}>
-            {visibleProducts.map((product) => (
-              <Link href={`/Cloth/${product.id}`} key={product.id}>
-                <div className="px-2">
-                  <div className="relative bg-[#f2efe9] rounded-xl overflow-hidden">
-                    <button className="absolute top-3 right-3 z-10 bg-white p-1 rounded-full">
-                      <Heart className="w-4 h-4" />
-                    </button>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedTab}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Slider {...settings}>
+                {visibleProducts.map((product, index) => (
+                  <Link href={`/Cloth/${product.id}`} key={product.id}>
+                    <motion.div
+                      className="px-2"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.08, duration: 0.4 }}
+                    >
+                      <div className="relative bg-[#f2efe9] rounded-xl overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+                        <button className="absolute top-3 right-3 z-10 p-1.5 rounded-full text-black/60 hover:text-red-500 transition-colors"
+                          style={{
+                            backdropFilter: "blur(12px)",
+                            WebkitBackdropFilter: "blur(12px)",
+                            background: "rgba(255,255,255,0.7)",
+                            border: "1px solid rgba(255,255,255,0.3)",
+                          }}
+                        >
+                          <Heart className="w-4 h-4" />
+                        </button>
 
-                    <div className="relative h-[300px]">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        width={400}
-                        height={400}
-                        className="object-contain"
-                      />
-                    </div>
+                        {product.discount > 0 && (
+                          <div
+                            className="absolute top-3 left-3 z-10 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white"
+                            style={{
+                              backdropFilter: "blur(8px)",
+                              background: "rgba(255,138,0,0.75)",
+                              border: "1px solid rgba(255,255,255,0.2)",
+                            }}
+                          >
+                            -{product.discount}%
+                          </div>
+                        )}
 
-                    <div className="p-4">
-                      <h3 className="text-sm font-bold uppercase line-clamp-1">
-                        {product.name || "FLUX PIECE"}
-                      </h3>
-                      <p className="text-xs text-gray-600 line-clamp-2">
-                        {product.description ||
-                          "Curated from the latest FLUX collection."}
-                      </p>
-                      <p className="mt-2 font-bold">
-                        ₹{product.finalPrice ?? product.price ?? "—"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </Slider>
+                        <div className="relative h-[300px]">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            width={400}
+                            height={400}
+                            className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+
+                        <div className="p-4">
+                          <h3 className="text-sm font-bold uppercase line-clamp-1">
+                            {product.name || "FLUX PIECE"}
+                          </h3>
+                          <p className="text-xs text-gray-600 line-clamp-2 mt-1">
+                            {product.description ||
+                              "Curated from the latest FLUX collection."}
+                          </p>
+                          <div className="mt-2 flex items-center gap-2">
+                            <p className="font-bold">
+                              ₹{product.finalPrice ?? product.price ?? "—"}
+                            </p>
+                            {product.price !== product.finalPrice && (
+                              <p className="text-xs text-gray-400 line-through">
+                                ₹{product.price}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </Link>
+                ))}
+              </Slider>
+            </motion.div>
+          </AnimatePresence>
         )}
       </div>
     </section>

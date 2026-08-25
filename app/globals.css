@@ -18,9 +18,70 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
-html,body{
-  background-color: #f7ecdf; 
+
+/* ── Lenis smooth scroll ── */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+html, body {
+  background-color: #f7ecdf;
+  scroll-behavior: initial;
+}
+
+/* ── Custom glass cursor (desktop only) ── */
+@media (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+}
+
+/* ── Glassmorphism utilities ── */
+.glass {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-light {
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  background: rgba(246, 236, 223, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.glass-dark {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Fonts ── */
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Ultralight.otf") format("opentype");
@@ -68,14 +129,14 @@ html,body{
   src: url("/Fonts/SF-Pro-Display-Heavy.otf") format("opentype");
   font-weight: 800;
 }
+
 html,
 body {
   font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
 }
 
-
-
+/* ── Slick carousel ── */
 .slick-slider {
   position: relative;
   width: 100%;
@@ -98,7 +159,6 @@ body {
 .slick-slide > div {
   height: 100%;
 }
-
 
 .slick-prev,
 .slick-next {
@@ -131,13 +191,13 @@ body {
   background: #FF8A00;
 }
 
-
 @media (max-width: 640px) {
   .slick-prev,
   .slick-next {
     display: none !important; 
   }
 }
+
 .input {
   width: 100%;
   padding: 0.75rem 1rem;

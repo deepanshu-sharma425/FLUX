@@ -218,6 +218,152 @@ const products = [
       fit: "Standard",
     }
   },
+
+  // ── NEW FLUX-BRANDED PRODUCTS ──
+  {
+    id: 13,
+    name: "Flux Oversized Graphic Tee",
+    category: "T-Shirts",
+    description: "Bold oversized tee with FLUX graffiti-style branding across the chest. Drop shoulder cut for maximum street cred.",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    price: 1999,
+    discount: 15,
+    finalPrice: 1699,
+    image: "/Asset/hoddie1.png",
+    color: "Washed Black",
+    sex: "Unisex",
+    about: "latest",
+    details: {
+      material: "240 GSM Cotton",
+      fit: "Oversized",
+    }
+  },
+  {
+    id: 14,
+    name: "Flux Signature Bomber Jacket",
+    category: "Jackets",
+    description: "Premium bomber with embroidered FLUX logo on back. Ribbed cuffs and satin-lined interior for a luxury streetwear finish.",
+    sizes: ["M", "L", "XL"],
+    price: 5999,
+    discount: 20,
+    finalPrice: 4799,
+    image: "/Asset/fshirt1.png",
+    color: "Olive Green",
+    sex: "Male",
+    about: "bestsellers",
+    details: {
+      material: "Nylon Shell / Satin Lining",
+      fit: "Regular",
+    }
+  },
+  {
+    id: 15,
+    name: "Flux Motion Track Pants",
+    category: "Joggers",
+    description: "Technical track pants with reflective FLUX stripes down the side. Zippered pockets and elastic waistband.",
+    sizes: ["S", "M", "L", "XL"],
+    price: 2499,
+    discount: 10,
+    finalPrice: 2249,
+    image: "/Asset/cargo1.png",
+    color: "Charcoal",
+    sex: "Unisex",
+    about: "latest",
+    details: {
+      material: "Poly Tricot",
+      fit: "Tapered",
+    }
+  },
+  {
+    id: 16,
+    name: "Flux Cropped Hoodie",
+    category: "Hoodies",
+    description: "Cropped hoodie with tonal FLUX embroidery. Raw-cut hem and oversized kangaroo pocket.",
+    sizes: ["XS", "S", "M", "L"],
+    price: 2999,
+    discount: 25,
+    finalPrice: 2249,
+    image: "/Asset/hoddie2.png",
+    color: "Dusty Rose",
+    sex: "Female",
+    about: "sale",
+    details: {
+      material: "French Terry Cotton",
+      fit: "Cropped Oversized",
+    }
+  },
+  {
+    id: 17,
+    name: "Flux Mesh Basketball Jersey",
+    category: "T-Shirts",
+    description: "Breathable mesh jersey with large FLUX chest print and contrast piping. Game-day energy for the streets.",
+    sizes: ["M", "L", "XL", "XXL"],
+    price: 1799,
+    discount: 10,
+    finalPrice: 1619,
+    image: "/Asset/cshirt1.png",
+    color: "Black / Orange",
+    sex: "Unisex",
+    about: "bestsellers",
+    details: {
+      material: "Performance Mesh",
+      fit: "Regular",
+    }
+  },
+  {
+    id: 18,
+    name: "Flux Denim Trucker Jacket",
+    category: "Jackets",
+    description: "Classic trucker silhouette in washed denim with FLUX patch on the chest. Distressed details and brass hardware.",
+    sizes: ["S", "M", "L", "XL"],
+    price: 4499,
+    discount: 15,
+    finalPrice: 3824,
+    image: "/Asset/fshirt2.png",
+    color: "Mid Wash Blue",
+    sex: "Male",
+    about: "sale",
+    details: {
+      material: "100% Denim",
+      fit: "Regular",
+    }
+  },
+  {
+    id: 19,
+    name: "Flux Ribbed Tank Top",
+    category: "T-Shirts",
+    description: "Figure-hugging ribbed tank with small FLUX emblem on the left chest. Perfect for layering or solo wear.",
+    sizes: ["XS", "S", "M", "L"],
+    price: 999,
+    discount: 20,
+    finalPrice: 799,
+    image: "/Asset/cshirt2.png",
+    color: "Sand Beige",
+    sex: "Female",
+    about: "latest",
+    details: {
+      material: "Ribbed Cotton",
+      fit: "Slim",
+    }
+  },
+  {
+    id: 20,
+    name: "Flux Logo Beanie",
+    category: "Caps",
+    description: "Chunky knit beanie with woven FLUX label. Double-layered for warmth with folded cuff design.",
+    sizes: ["Free Size"],
+    price: 899,
+    discount: 10,
+    finalPrice: 809,
+    image: "/Asset/cap1.png",
+    color: "Black",
+    sex: "Unisex",
+    about: "bestsellers",
+    details: {
+      material: "Acrylic Knit",
+      fit: "One Size",
+    }
+  },
 ];
 
 export default products;

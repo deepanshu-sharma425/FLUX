@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { FramerPage } from "./FramerPage";
+import SmoothScroll from "./Components/SmoothScroll";
+import GlassCursor from "./Components/GlassCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,7 +25,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <FramerPage>{children}</FramerPage>
+        <SmoothScroll>
+          <GlassCursor />
+          <FramerPage>{children}</FramerPage>
+        </SmoothScroll>
       </body>
     </html>
   );
