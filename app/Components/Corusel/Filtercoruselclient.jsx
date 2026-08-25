@@ -30,19 +30,29 @@ const NextArrow = ({ onClick }) => (
   </button>
 );
 
-export default function FiltercoruselClient({ products }) {
-  const [selectedTab, setSelectedTab] = useState("latest");
+export default function FiltercoruselClient({ products = [] }) {
+  const [selectedTab, setSelectedTab] = useState("bestsellers");
 
-  const filteredProducts = products.filter(
-    (product) => product.about?.toLowerCase() === selectedTab.toLowerCase()
+  const isMatchingTab = (productAbout, tab) => {
+    if (!productAbout) return false;
+    const about = productAbout.toLowerCase().trim();
+    const target = tab.toLowerCase().trim();
+    if (target === "bestsellers" || target === "trending") {
+      return about === "bestsellers" || about === "trending" || about === "best sellers";
+    }
+    return about === target;
+  };
+
+  const filteredProducts = products.filter((product) =>
+    isMatchingTab(product.about, selectedTab)
   );
-  const visibleProducts =
-    filteredProducts.length > 0 ? filteredProducts : products;
+
+  const displayProducts = filteredProducts.length > 0 ? filteredProducts : products;
 
   const settings = {
     dots: true,
     dotsClass: "slick-dots flux-dots",
-    infinite: true,
+    infinite: displayProducts.length > 1,
     speed: 800,
     slidesToScroll: 1,
     swipe: true,
@@ -51,19 +61,19 @@ export default function FiltercoruselClient({ products }) {
     arrows: true,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
-    slidesToShow: 4,
+    slidesToShow: Math.min(4, displayProducts.length || 1),
     cssEase: "cubic-bezier(0.16, 1, 0.3, 1)",
     responsive: [
-      { breakpoint: 1440, settings: { slidesToShow: 3, arrows: false, dots: true } },
-      { breakpoint: 1024, settings: { slidesToShow: 2, arrows: false, dots: true } },
-      { breakpoint: 768, settings: { slidesToShow: 2, arrows: false, dots: true } },
+      { breakpoint: 1440, settings: { slidesToShow: Math.min(3, displayProducts.length || 1), arrows: false, dots: true } },
+      { breakpoint: 1024, settings: { slidesToShow: Math.min(2, displayProducts.length || 1), arrows: false, dots: true } },
+      { breakpoint: 768, settings: { slidesToShow: Math.min(2, displayProducts.length || 1), arrows: false, dots: true } },
       { breakpoint: 480, settings: { slidesToShow: 1.1, arrows: false, dots: false } },
     ],
   };
 
   const tabs = [
+    { key: "bestsellers", label: "Best Sellers" },
     { key: "latest", label: "Latest" },
-    { key: "trending", label: "Best Sellers" },
     { key: "sale", label: "Sale" },
   ];
 
@@ -74,7 +84,7 @@ export default function FiltercoruselClient({ products }) {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-8 mb-8 sm:mb-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tighter uppercase leading-tight">
@@ -106,7 +116,7 @@ export default function FiltercoruselClient({ products }) {
         {/* Carousel */}
         <div className="relative -mx-1 sm:-mx-2">
           <AnimatePresence mode="wait">
-            {filteredProducts.length ? (
+            {displayProducts.length > 0 ? (
               <motion.div
                 key={selectedTab}
                 initial={{ opacity: 0, y: 16 }}
@@ -115,7 +125,7 @@ export default function FiltercoruselClient({ products }) {
                 transition={{ duration: 0.4 }}
               >
                 <Slider {...settings}>
-                  {filteredProducts.map((product) => (
+                  {displayProducts.map((product) => (
                     <div key={product.id}>
                       <Link href={`/Cloth/${product.id}`} className="block h-full">
                         <ProductCard product={product} />
