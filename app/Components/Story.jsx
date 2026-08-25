@@ -1,65 +1,83 @@
 "use client";
 
 import Image from "next/image";
-import ScrollReveal from "./ScrollReveal";
+import { motion } from "framer-motion";
 
 const Story = () => {
   return (
-    <section className="relative isolate w-full min-h-[85vh] sm:min-h-[70vh] mt-10">
+    <section className="relative isolate w-full min-h-[85vh] sm:min-h-[100vh] overflow-hidden">
       
-      {/* Background Image */}
-      <Image
-        src="/storypage.png"
-        alt="Flux Story"
-        fill
-        priority
-        className="object-cover"
-      />
-
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
+      {/* Background Image with Parallax-like effect */}
+      <motion.div 
+        initial={{ scale: 1.1 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="absolute inset-0 z-0"
+      >
+        <Image
+          src="/storypage.png"
+          alt="Flux Story"
+          fill
+          priority
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
+      </motion.div>
 
       {/* Content */}
-      <div className="relative z-10 flex items-center min-h-[85vh] sm:min-h-[70vh] px-6 sm:px-10 md:px-20 font-mono">
-        <div className="max-w-4xl text-white">
-
-          <ScrollReveal variant="fadeLeft" duration={0.8}>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-widest">
-              Built From the Streets
+      <div className="relative z-10 flex items-center min-h-[85vh] sm:min-h-[100vh] px-6 sm:px-10 md:px-20 lg:px-40 py-20">
+        <div className="max-w-3xl text-white">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <p className="text-[8px] sm:text-[10px] font-black tracking-[0.5em] text-orange-500 uppercase mb-4">Our DNA</p>
+            <h1 className="text-4xl sm:text-7xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] mb-6 sm:mb-8">
+              Built <br /> From the <br /> <span className="text-gray-400/50">Streets</span>
             </h1>
-          </ScrollReveal>
 
-          <ScrollReveal variant="fadeUp" delay={0.2} duration={0.7}>
-            <p className="mt-6 text-sm sm:text-base text-gray-200 leading-relaxed">
-              FLUX was born from movement — from the noise of the city, the grind
-              of concrete streets, and the people who choose momentum over comfort.
-              Every piece we create reflects raw energy, resilience, and everyday utility.
-            </p>
-          </ScrollReveal>
+            <div className="space-y-4 sm:space-y-6 text-xs sm:text-base text-gray-300 leading-relaxed font-medium max-w-xl">
+              <p>
+                FLUX was born from movement — from the noise of the city, the grind
+                of concrete streets, and the people who choose momentum over comfort.
+                Every piece we create reflects raw energy, resilience, and everyday utility.
+              </p>
 
-          <ScrollReveal variant="fadeUp" delay={0.35} duration={0.7}>
-            <p className="mt-4 text-sm sm:text-base text-gray-300 leading-relaxed">
-              Designed with purpose and built for durability, our clothing is made
-              to move with you. From early mornings to late nights, from quiet streets
-              to crowded cities, FLUX adapts without losing form or function.
-            </p>
-          </ScrollReveal>
+              <p>
+                Designed with purpose and built for durability, our clothing is made
+                to move with you. From early mornings to late nights, from quiet streets
+                to crowded cities, FLUX adapts without losing form or function.
+              </p>
+            </div>
 
-          <ScrollReveal variant="fadeUp" delay={0.5} duration={0.7}>
-            <p className="mt-4 text-sm sm:text-base text-gray-300 leading-relaxed">
-              This isn&apos;t seasonal fashion or fast trends. It&apos;s everyday wear,
-              refined through motion, tested in real life, and shaped by streets
-              that never slow down.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal variant="scaleIn" delay={0.65} duration={0.6}>
-            <span className="block mt-10 text-lg tracking-[0.4em] font-semibold">
-              FLUX
-            </span>
-          </ScrollReveal>
-
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="mt-8 sm:mt-12 flex items-center gap-4 sm:gap-6"
+            >
+              <span className="text-xl sm:text-2xl tracking-[0.3em] sm:tracking-[0.5em] font-black">FLUX</span>
+              <div className="w-12 sm:w-20 h-[1px] bg-white/20" />
+              <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500">EST. 2026</span>
+            </motion.div>
+          </motion.div>
         </div>
+      </div>
+
+      {/* Aesthetic Side Text */}
+      <div className="absolute right-10 bottom-20 hidden lg:block overflow-hidden h-[400px]">
+        <motion.p
+          animate={{ y: [0, -100, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="text-[10rem] font-black text-white/5 uppercase tracking-tighter vertical-text leading-none select-none"
+          style={{ writingMode: 'vertical-rl' }}
+        >
+          STREETWEAR CULTURE FLUX MOVEMENT
+        </motion.p>
       </div>
     </section>
   );

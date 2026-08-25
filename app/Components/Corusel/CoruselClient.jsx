@@ -6,30 +6,63 @@ import Link from "next/link";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductCard from "./ProductCard";
+import { motion } from "framer-motion";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 
 const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
+const PrevArrow = ({ onClick }) => (
+  <button
+    onClick={onClick}
+    className="absolute -left-14 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white shadow-lg border border-black/5 flex items-center justify-center hover:bg-black hover:text-white transition-all hidden lg:flex"
+  >
+    <ArrowLeft className="w-4 h-4" />
+  </button>
+);
+
+const NextArrow = ({ onClick }) => (
+  <button
+    onClick={onClick}
+    className="absolute -right-14 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white shadow-lg border border-black/5 flex items-center justify-center hover:bg-black hover:text-white transition-all hidden lg:flex"
+  >
+    <ArrowRight className="w-4 h-4" />
+  </button>
+);
+
 const CoruselClient = ({ products }) => {
   const settings = {
-    dots: false,
-    infinite: false,
-    speed: 600,
+    dots: true,
+    dotsClass: "slick-dots flux-dots",
+    infinite: true,
+    speed: 900,
     slidesToScroll: 1,
     swipe: true,
     swipeToSlide: true,
     touchMove: true,
     draggable: true,
-    cssEase: "ease-out",
+    cssEase: "cubic-bezier(0.16, 1, 0.3, 1)",
     arrows: true,
-    slidesToShow: 3,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
+    slidesToShow: 4,
+    autoplay: true,
+    autoplaySpeed: 4000,
     responsive: [
       {
-        breakpoint: 1024,
-        settings: { slidesToShow: 2, arrows: true },
+        breakpoint: 1440,
+        settings: { slidesToShow: 3, arrows: false, dots: true },
       },
       {
-        breakpoint: 640,
-        settings: { slidesToShow: 1, arrows: false },
+        breakpoint: 1024,
+        settings: { slidesToShow: 2, arrows: false, dots: true },
+      },
+      {
+        breakpoint: 768,
+        settings: { slidesToShow: 2, arrows: false, dots: true, autoplay: false },
+      },
+      {
+        breakpoint: 480,
+        settings: { slidesToShow: 1.1, arrows: false, dots: false, autoplay: false },
       },
     ],
   };
@@ -38,31 +71,47 @@ const CoruselClient = ({ products }) => {
   const skeletonItems = [1, 2, 3];
 
   return (
-    <section className="py-6 md:py-10 bg-[#f6ecdf]">
-      <div className="relative max-w-7xl mx-auto px-3 sm:px-6">
+    <section className="py-10 sm:py-20 bg-[#f6ecdf] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-6 sm:mb-12 flex items-end justify-between">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <p className="text-[8px] sm:text-[10px] font-black tracking-[0.3em] text-orange-500 uppercase mb-1 sm:mb-2">Featured</p>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tighter uppercase leading-tight">
+            Trending <span className="text-gray-300">Now</span>
+          </h2>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <Link
+            href="/AllCloth"
+            className="group flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs font-black uppercase tracking-widest hover:text-orange-600 transition-colors"
+          >
+            <span className="hidden sm:inline">View All</span>
+            <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center group-hover:bg-orange-600 transition-colors">
+              <ArrowRight className="w-4 h-4" />
+            </div>
+          </Link>
+        </motion.div>
+      </div>
+
+      <div className="relative max-w-[1440px] mx-auto px-2 sm:px-4">
         <Slider {...settings}>
-          {isEmpty
-            ? skeletonItems.map((i) => (
-                <div key={i} className="px-1 sm:px-2">
-                  <div className="group relative overflow-hidden bg-[#f2efe9] rounded-xl animate-pulse">
-                    <div className="relative h-[300px] sm:h-[420px] md:h-[520px] bg-zinc-300/60" />
-                    <div className="absolute bottom-6 left-5 right-5">
-                      <div className="h-4 w-2/3 bg-zinc-300/80 rounded mb-2" />
-                      <div className="h-3 w-full bg-zinc-300/70 rounded mb-2" />
-                      <div className="h-3 w-1/2 bg-zinc-300/70 rounded" />
-                    </div>
-                  </div>
-                </div>
-              ))
-            : products.map((product) => (
-                <Link
-                  href={`/Cloth/${product.id}`}
-                  key={product.id}
-                  className="block h-full"
-                >
-                  <ProductCard product={product} />
-                </Link>
-              ))}
+          {products.map((product) => (
+            <div key={product.id}>
+              <Link href={`/Cloth/${product.id}`} className="block h-full">
+                <ProductCard product={product} />
+              </Link>
+            </div>
+          ))}
         </Slider>
       </div>
     </section>

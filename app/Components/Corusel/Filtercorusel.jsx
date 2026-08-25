@@ -5,13 +5,12 @@ import { prisma } from "../../../lib/prisma";
 import FiltercoruselClient from "./Filtercoruselclient";
 
 export default async function Filtercorusel() {
-  let products = [];
-  try {
-    products = await prisma.cloth.findMany();
-  } catch (error) {
-    console.error("Database connection failed in Filtercorusel:", error.message);
-    products = [];
-  }
+  const products = await prisma.cloth.findMany();
+  const serializableProducts = products.map(product => ({
+    ...product,
+    createdAt: product.createdAt.toISOString(),
+    updatedAt: product.updatedAt.toISOString(),
+  }));
 
-  return <FiltercoruselClient products={products} />;
+  return <FiltercoruselClient products={serializableProducts} />;
 }

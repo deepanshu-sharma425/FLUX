@@ -2,18 +2,16 @@ import { prisma } from "../../../lib/prisma";
 import React from "react";
 import CoruselClient from "./CoruselClient";
 const Corusel = async () => {
-  let products = [];
-  try {
-    products = await prisma.cloth.findMany();
-  } catch (error) {
-    console.error("Database connection failed in Corusel:", error.message);
-    // Return empty array to prevent 500 error
-    products = [];
-  }
+  const products = await prisma.cloth.findMany();
+  const serializableProducts = products.map(product => ({
+    ...product,
+    createdAt: product.createdAt.toISOString(),
+    updatedAt: product.updatedAt.toISOString(),
+  }));
 
   return(
     <>
-     <CoruselClient products={products} />
+     <CoruselClient products={serializableProducts} />
     </>) 
 }
 export default Corusel;

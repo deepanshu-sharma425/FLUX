@@ -1,94 +1,91 @@
+"use client";
+
 import React from "react";
-import { ShoppingBag } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
+import WishlistButton from "../WishlistButton";
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="px-1 sm:px-2 h-full">
-      <div className="group relative h-full overflow-hidden bg-[#f2efe9] rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent hover:border-gray-200">
-        {/* Image Container */}
-        <div className="relative aspect-[3/4] overflow-hidden">
-          <img
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -6 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      className="px-1.5 h-full py-3"
+    >
+      <div className="group relative bg-[#ede8e0] rounded-[24px] sm:rounded-[32px] overflow-hidden shadow-[0_2px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] transition-all duration-700 border border-black/[0.03] hover:border-black/[0.06] flex flex-col h-full">
+
+        {/* Image Container – square on mobile, portrait on larger screens */}
+        <div className="relative w-full aspect-square sm:aspect-[4/5] overflow-hidden bg-[#ede8e0]">
+          <motion.img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            whileHover={{ scale: 1.07 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full h-full object-contain p-4 sm:p-6 mix-blend-multiply"
           />
-          
-          {/* Glassmorphism Overlay Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-          
-          {/* Glass Quick Action Button */}
-          <div className="absolute top-4 right-4 translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-            <div
-              className="p-2.5 rounded-full text-white hover:text-black transition-all duration-300"
-              style={{
-                backdropFilter: "blur(16px) saturate(180%)",
-                WebkitBackdropFilter: "blur(16px) saturate(180%)",
-                background: "rgba(255, 255, 255, 0.15)",
-                border: "1px solid rgba(255, 255, 255, 0.25)",
-              }}
-            >
-              <ShoppingBag className="w-5 h-5" />
-            </div>
-          </div>
 
-          {/* Discount Badge with glass effect */}
+          {/* Discount Badge */}
           {product.discount > 0 && (
-            <div
-              className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider"
-              style={{
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-                background: "rgba(255, 138, 0, 0.7)",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-              }}
-            >
-              -{product.discount}%
+            <div className="absolute top-3 left-3 sm:top-5 sm:left-5 bg-black text-white text-[9px] sm:text-[10px] font-black uppercase tracking-widest px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full z-10 shadow-md">
+              {product.discount}% OFF
             </div>
           )}
+
+          {/* Wishlist Button */}
+          <div className="absolute top-3 right-3 sm:top-5 sm:right-5 z-10">
+            <WishlistButton productId={product.id} />
+          </div>
+
+          {/* Quick-view arrow */}
+          <div className="absolute bottom-3 right-3 sm:bottom-5 sm:right-5 z-10">
+            <motion.div
+              whileHover={{ scale: 1.12, rotate: 45 }}
+              whileTap={{ scale: 0.9 }}
+              className="bg-black text-white p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl shadow-lg cursor-pointer hover:bg-orange-600 transition-colors duration-300"
+            >
+              <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </motion.div>
+          </div>
+
+          {/* Hover overlay */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/[0.02] transition-colors duration-500" />
         </div>
 
-        {/* Glass Content Overlay */}
-        <div
-          className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500"
-          style={{
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
-            background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%)",
-          }}
-        >
-          <div className="space-y-1 mb-2">
-            <p className="text-xs font-medium tracking-[0.2em] text-orange-400 uppercase">
-              {product.category || "Streetwear"}
+        {/* Content */}
+        <div className="p-4 sm:p-6 flex flex-col flex-1">
+          <div className="mb-3 sm:mb-4">
+            <p className="text-[9px] sm:text-[10px] font-black tracking-[0.22em] text-gray-400 uppercase mb-1">
+              {product.category || "COLLECTION"}
             </p>
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide line-clamp-1 group-hover:text-orange-100 transition-colors">
+            <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-tight group-hover:text-black transition-colors line-clamp-1 uppercase tracking-tight">
               {product.name}
             </h3>
           </div>
 
-          <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
-            <p className="text-sm text-gray-300 line-clamp-2 mb-3 font-light leading-relaxed">
-              {product.description || "Signature FLUX design."}
-            </p>
-          </div>
-
-          <div className="flex items-center justify-between pt-2 border-t border-white/10 mt-2">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-lg font-bold text-white group-hover:text-orange-400 transition-colors">
-                ₹{product.finalPrice?.toLocaleString() ?? product.price?.toLocaleString()}
-              </span>
-              {product.price !== product.finalPrice && (
-                <span className="text-xs text-gray-400 line-through">
+          <div className="mt-auto flex items-end justify-between">
+            <div className="flex flex-col">
+              {product.discount > 0 && (
+                <span className="text-[10px] sm:text-xs line-through text-gray-400 font-medium mb-0.5">
                   ₹{product.price?.toLocaleString()}
                 </span>
               )}
+              <span className="text-lg sm:text-2xl font-black text-black tracking-tighter">
+                ₹{product.finalPrice?.toLocaleString()}
+              </span>
             </div>
-            <span className="text-xs font-semibold tracking-widest uppercase border-b border-transparent group-hover:border-white transition-all pb-0.5">
-              View Details
-            </span>
+
+            <div className="flex items-center gap-1 text-gray-400 group-hover:text-black transition-colors duration-300">
+              <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest">Details</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-gray-200 group-hover:bg-orange-500 transition-colors duration-300" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

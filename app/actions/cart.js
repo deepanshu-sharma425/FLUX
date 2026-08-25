@@ -1,68 +1,45 @@
 'use server';
 
 import { prisma } from "../../lib/prisma";
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { TOKEN_NAME, verifyAuthToken } from "../../lib/jwt";
 
-export async function updateCartItemQuantity(itemId, quantity) {
+export async function getCartCount() {
   const cookieStore = await cookies();
   const token = cookieStore.get(TOKEN_NAME)?.value;
   const payload = token ? verifyAuthToken(token) : null;
 
-  if (!payload) return { error: "Unauthorized" };
+  if (!payload) {
+    return 0;
+  }
 
   try {
-    if (quantity <= 0) {
-      await prisma.cartItem.delete({
-        where: { id: itemId, userId: payload.userId },
-      });
-    } else {
-      await prisma.cartItem.update({
-        where: { id: itemId, userId: payload.userId },
-        data: { quantity },
-      });
-    }
-    revalidatePath("/Cart");
-    return { success: true };
+    const count = await prisma.cartItem.count({
+      where: { userId: payload.userId },
+    });
+    return count;
   } catch (error) {
-    return { error: "Failed to update quantity" };
+    console.error("Error fetching cart count:", error);
+    return 0;
   }
 }
 
-export async function removeCartItem(itemId) {
+export async function getWishlistCount() {
   const cookieStore = await cookies();
   const token = cookieStore.get(TOKEN_NAME)?.value;
   const payload = token ? verifyAuthToken(token) : null;
 
-  if (!payload) return { error: "Unauthorized" };
-
-  try {
-    await prisma.cartItem.delete({
-      where: { id: itemId, userId: payload.userId },
-    });
-    revalidatePath("/Cart");
-    return { success: true };
-  } catch (error) {
-    return { error: "Failed to remove item" };
+  if (!payload) {
+    return 0;
   }
-}
-
-export async function updateCartItemSize(itemId, size) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(TOKEN_NAME)?.value;
-  const payload = token ? verifyAuthToken(token) : null;
-
-  if (!payload) return { error: "Unauthorized" };
 
   try {
-    await prisma.cartItem.update({
-      where: { id: itemId, userId: payload.userId },
-      data: { size },
+    const count = await prisma.wishlist.count({
+      where: { userId: payload.userId },
     });
-    revalidatePath("/Cart");
-    return { success: true };
+    return count;
   } catch (error) {
-    return { error: "Failed to update size" };
+    console.error("Error fetching wishlist count:", error);
+    return 0;
   }
 }

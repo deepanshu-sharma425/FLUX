@@ -3,12 +3,15 @@ import { prisma } from "../../lib/prisma";
 import { cookies } from "next/headers";
 import { TOKEN_NAME, verifyAuthToken } from "../../lib/jwt";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { MapPin, ShoppingBag, LayoutDashboard, LogOut } from "lucide-react";
+import LogoutButton from "./LogoutButton";
 
 export default async function AccountPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get(TOKEN_NAME)?.value;
   const payload = token ? verifyAuthToken(token) : null;
+
+  const isAdmin = payload?.email === "admin@gmail.com"; // Basic admin check matching current codebase style
 
   if (!payload) {
     return (
@@ -73,53 +76,85 @@ export default async function AccountPage() {
     <>
       <Navbar />
       <div className="h-24" />
-      <section className="min-h-screen bg-[#f6ecdf] px-6 pt-[96px] pb-20">
+      <section className="min-h-screen bg-[#f6ecdf] px-4 sm:px-6 pt-[96px] pb-20">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-extrabold tracking-wide mb-6">
-            Your account
-          </h1>
-
-          <div className="bg-[#f2efe9] rounded-2xl p-6 space-y-4">
-            <div>
-              <p className="text-xs font-semibold text-gray-500">NAME</p>
-              <p className="text-lg font-bold">
-                {user.name || "No name set"}
-              </p>
-            </div>
-
-            <div>
-              <p className="text-xs font-semibold text-gray-500">EMAIL</p>
-              <p className="text-sm">{user.email}</p>
-            </div>
-
-            <div>
-              <p className="text-xs font-semibold text-gray-500">ROLE</p>
-              <p className="text-sm">
-                {payload.isAdmin ? "Admin" : "Customer"}
-              </p>
-            </div>
+          <div className="mb-8 sm:mb-12">
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tighter uppercase leading-none">
+              Your <span className="text-orange-500">Account</span>
+            </h1>
+            <p className="text-gray-500 mt-2 text-[10px] sm:text-xs font-bold uppercase tracking-widest">Manage your profile & orders</p>
           </div>
 
-          <div className="mt-6">
-            <Link
-              href="/Account/Address"
-              className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-gray-100 rounded-full group-hover:bg-[#f6ecdf] transition-colors">
+          <div className="bg-white/50 backdrop-blur-sm rounded-[32px] p-6 sm:p-10 space-y-8 border border-white/50 shadow-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              <div className="space-y-1">
+                <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Full Name</p>
+                <p className="text-xl sm:text-2xl font-black tracking-tight">
+                  {user.name || "User"}
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Email Address</p>
+                <p className="text-sm sm:text-base font-bold text-gray-600 truncate">
+                  {user.email}
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Account Type</p>
+                <div className="inline-flex px-3 py-1 bg-black text-white rounded-full text-[8px] font-black uppercase tracking-widest">
+                  {payload.isAdmin ? "Admin" : "Customer"}
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-100 pt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Link
+                href="/Account/Orders"
+                className="flex items-center gap-4 p-5 bg-white rounded-2xl hover:shadow-lg hover:border-black transition-all border border-gray-100 group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-600 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                  <ShoppingBag className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xs font-black uppercase tracking-widest">My Orders</p>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">View history</p>
+                </div>
+              </Link>
+
+              <Link
+                href="/Account/Address"
+                className="flex items-center gap-4 p-5 bg-white rounded-2xl hover:shadow-lg hover:border-black transition-all border border-gray-100 group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-black/5 text-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg">My Addresses</h3>
-                  <p className="text-sm text-gray-500">
-                    Manage your shipping addresses
-                  </p>
+                  <p className="text-xs font-black uppercase tracking-widest">Address Book</p>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Manage addresses</p>
                 </div>
-              </div>
-              <div className="text-gray-400 group-hover:text-black transition-colors">
-                →
-              </div>
-            </Link>
+              </Link>
+
+              {isAdmin && (
+                <Link
+                  href="/admin/dashboard"
+                  className="sm:col-span-2 flex items-center gap-4 p-5 bg-black text-white rounded-2xl hover:shadow-xl hover:bg-orange-600 transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                    <LayoutDashboard className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-widest">Admin Dashboard</p>
+                    <p className="text-[10px] text-white/50 font-bold uppercase tracking-widest">Management portal</p>
+                  </div>
+                </Link>
+              )}
+            </div>
+
+            <div className="pt-4">
+              <LogoutButton />
+            </div>
           </div>
         </div>
       </section>

@@ -1,129 +1,45 @@
 @import "tailwindcss";
 
-@layer base {
-  *,
-  ::after,
-  ::before {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
-@layer components {
-  .input-v2 {
-    @apply w-full px-6 py-4 rounded-2xl bg-white border border-black/5 focus:border-black/20 focus:ring-1 focus:ring-black/5 outline-none transition-all duration-300 text-sm font-bold placeholder:text-gray-300;
-  }
-}
-
-@theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-/* ── Lenis smooth scroll ── */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
 html, body {
   background-color: #f7ecdf;
-  scroll-behavior: initial;
 }
 
-/* ── Custom glass cursor (desktop only) ── */
-@media (pointer: fine) {
-  *,
-  *::before,
-  *::after {
-    cursor: none !important;
-  }
-}
-
-/* ── Glassmorphism utilities ── */
-.glass {
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.glass-light {
-  backdrop-filter: blur(20px) saturate(200%);
-  -webkit-backdrop-filter: blur(20px) saturate(200%);
-  background: rgba(246, 236, 223, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.glass-dark {
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-card {
-  backdrop-filter: blur(12px) saturate(150%);
-  -webkit-backdrop-filter: blur(12px) saturate(150%);
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-}
-
-/* ── Fonts ── */
+/* ─── Fonts ──────────────────────────────────────────── */
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Ultralight.otf") format("opentype");
   font-weight: 200;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Thin.otf") format("opentype");
   font-weight: 100;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Light.otf") format("opentype");
   font-weight: 300;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Regular.otf") format("opentype");
   font-weight: 400;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Medium.otf") format("opentype");
   font-weight: 500;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Semibold.otf") format("opentype");
   font-weight: 600;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Bold.otf") format("opentype");
   font-weight: 700;
 }
-
 @font-face {
   font-family: "SF Pro Display";
   src: url("/Fonts/SF-Pro-Display-Heavy.otf") format("opentype");
@@ -136,7 +52,16 @@ body {
     "Segoe UI", sans-serif;
 }
 
-/* ── Slick carousel ── */
+/* ─── Scrollbar helpers ────────────────────────────── */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Slick carousel base ─────────────────────────── */
 .slick-slider {
   position: relative;
   width: 100%;
@@ -160,10 +85,11 @@ body {
   height: 100%;
 }
 
+/* ─── Slick arrows ────────────────────────────────── */
 .slick-prev,
 .slick-next {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   background: #111111;
   border-radius: 9999px;
   z-index: 40;
@@ -174,30 +100,60 @@ body {
 
 .slick-prev:before,
 .slick-next:before {
-  font-size: 22px;
+  font-size: 20px;
   color: #ffffff;
   opacity: 1;
 }
-.slick-prev {
-  left: 8px;
-}
 
-.slick-next {
-  right: 8px;
-}
+.slick-prev { left: 8px; }
+.slick-next { right: 8px; }
 
 .slick-prev:hover,
 .slick-next:hover {
   background: #FF8A00;
 }
 
-@media (max-width: 640px) {
+/* Hide default slick arrows on mobile – we use custom ones */
+@media (max-width: 1024px) {
   .slick-prev,
   .slick-next {
-    display: none !important; 
+    display: none !important;
   }
 }
 
+/* ─── Custom carousel dots ────────────────────────── */
+.flux-dots {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px 0 4px;
+  list-style: none;
+  margin: 0;
+}
+
+.flux-dots li {
+  margin: 0;
+}
+
+.flux-dots li button {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #d1c9bf;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.3s ease, background 0.3s ease;
+  font-size: 0;
+}
+
+.flux-dots li.slick-active button {
+  width: 20px;
+  background: #111111;
+}
+
+/* ─── Input base style ────────────────────────────── */
 .input {
   width: 100%;
   padding: 0.75rem 1rem;

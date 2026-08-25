@@ -1,133 +1,125 @@
 "use client";
 
-import { ArrowBigRight } from "lucide-react";
+import { ArrowRight, ShoppingBag, Sparkles } from "lucide-react";
 import Image from "next/image";
-import { Suspense } from "react";
-import Corusel from "./Corusel/Corusel";
-import CoruselSkeleton from "./Corusel/CoruselSkeleton";
-import Filtercorusel from "./Corusel/Filtercorusel";
 import Story from "./Story";
+import { motion } from "framer-motion";
 import HomeFooter from "./Footer/HomeFotter";
-import ScrollReveal from "./ScrollReveal";
 import Link from "next/link";
 
-const Homepage = () => {
+const Homepage = ({ corusel, filterCorusel }) => {
   return (
     <>
-      <section
-        className="
-          relative overflow-hidden font-[SF_Pro_Display]
-          bg-[#f6ecdf]
-          sm:min-h-[100svh]
-        "
-      >
-        {/* FLUX Background Letters */}
-        <h1
-          className="
-            hidden sm:flex
-            absolute
-            top-[12%] md:top-[18%]
-            left-0 right-0
-            justify-between
-            px-10 md:px-20
-            text-[10rem] md:text-[18rem] lg:text-[22rem]
-            font-black text-orange-500/90
-            select-none pointer-events-none z-0
-          "
-        >
-          <span>F</span>
-          <span>L</span>
-          <span>U</span>
-          <span>X</span>
-        </h1>
+      <section className="relative min-h-screen bg-[#f6ecdf] overflow-hidden flex flex-col items-center justify-center pt-24 sm:pt-32">
+        {/* Animated Background Text */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+          <Link href="/" className="pointer-events-auto">
+            <motion.h1
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 0.05, scale: 1 }}
+              transition={{ duration: 2, ease: "easeOut" }}
+              className="text-[40vw] sm:text-[30vw] font-black tracking-tighter text-black leading-none hover:opacity-10 transition-opacity cursor-pointer"
+            >
+              FLUX
+            </motion.h1>
+          </Link>
+        </div>
 
-        <div
-          className="
-            relative z-20
-            flex flex-col items-center
-            pt-10 sm:pt-24 md:pt-32
-            px-4
-          "
-        >
-          {/* Hero Image with scroll animation */}
-          <ScrollReveal variant="scaleIn" duration={0.9}>
+        {/* Hero Content */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-[350px] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1000px] aspect-[4/5] sm:aspect-[16/9] mb-8 sm:mb-12"
+          >
             <Image
               src="/Asset/hero.png"
               alt="Flux Collection"
-              width={1100}
-              height={900}
+              fill
               priority
-              className="
-                w-full
-                max-w-[240px]
-                sm:max-w-[420px]
-                md:max-w-[650px]
-                lg:max-w-[900px]
-                xl:max-w-[1100px]
-                object-contain
-              "
+              className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.1)]"
             />
-          </ScrollReveal>
-
-          {/* Hero Text */}
-          <ScrollReveal variant="fadeUp" delay={0.3} duration={0.7}>
-            <div className="mt-5 sm:mt-8 text-center">
-              <h2 className="text-base sm:text-xl md:text-3xl font-extrabold tracking-wide">
-                WINTER COLLECTION DROP
-              </h2>
-              <p className="mt-2 text-[0.6rem] sm:text-xs md:text-sm tracking-[0.25em] opacity-70 font-medium">
-                UNITED IN URBAN
-              </p>
-            </div>
-          </ScrollReveal>
-
-          {/* CTA Button with glassmorphism */}
-          <ScrollReveal variant="fadeUp" delay={0.5} duration={0.7}>
-            <div className="mt-5 sm:mt-8">
-              <Link href="/AllCloth">
-                <div
-                  className="
-                    group flex items-center justify-center gap-2
-                    px-5 py-2.5 sm:px-6 sm:py-3
-                    rounded-full
-                    bg-orange-400
-                    hover:bg-zinc-900
-                    transition-all duration-300
-                    cursor-pointer
-                    shadow-lg hover:shadow-2xl
-                    hover:shadow-orange-500/20
-                  "
-                >
-                  <span className="text-xs sm:text-sm md:text-base text-black group-hover:text-white font-medium tracking-wide transition-colors duration-300 whitespace-nowrap">
-                    Shop the Winter Collection
-                  </span>
-                  <ArrowBigRight
-                    className="
-                      w-4 h-4 sm:w-5 sm:h-5
-                      text-black group-hover:text-white
-                      transition-all duration-300
-                      group-hover:translate-x-1
-                    "
-                  />
+            
+            {/* Floating Badges - Visible on sm and up */}
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-[15%] -left-2 sm:left-10 bg-white/90 backdrop-blur-md p-3 sm:p-4 rounded-2xl sm:rounded-3xl shadow-xl border border-white/50 z-20"
+            >
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-white">
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
+                <div>
+                  <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-gray-400">New Drop</p>
+                  <p className="text-xs sm:text-sm font-bold tracking-tight text-black">Winter '26</p>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <div className="text-center space-y-4 sm:space-y-6 max-w-2xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              <h2 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9]">
+                Elevate Your <br />
+                <span className="text-orange-500">Street Game.</span>
+              </h2>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="text-gray-400 text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-[0.3em] sm:tracking-[0.4em]"
+            >
+              Defining Urban Excellence since 2026
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4 sm:pt-6"
+            >
+              <Link href="/AllCloth" className="w-full sm:w-auto group relative px-8 sm:px-10 py-4 sm:py-5 bg-black text-white rounded-2xl sm:rounded-[24px] overflow-hidden transition-all hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)]">
+                <div className="relative z-10 flex items-center justify-center gap-3 font-black text-[10px] sm:text-xs uppercase tracking-widest">
+                  Shop Collection
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+                <div className="absolute inset-0 bg-orange-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               </Link>
-            </div>
-          </ScrollReveal>
+              
+              <Link href="/AllCloth" className="w-full sm:w-auto group px-8 sm:px-10 py-4 sm:py-5 bg-white text-black border-2 border-black/5 rounded-2xl sm:rounded-[24px] flex items-center justify-center gap-3 font-black text-[10px] sm:text-xs uppercase tracking-widest hover:border-black transition-all">
+                View Lookbook
+                <ShoppingBag className="w-4 h-4" />
+              </Link>
+            </motion.div>
+          </div>
         </div>
+        
+        {/* Scroll Indicator */}
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-gray-300 to-transparent" />
+          <span className="text-[8px] font-black uppercase tracking-[0.5em] text-gray-400 rotate-90 translate-y-8">Scroll</span>
+        </motion.div>
       </section>
 
-      {/* Carousel sections */}
-      <ScrollReveal variant="fadeUp" delay={0.1}>
-        <Suspense fallback={<CoruselSkeleton />}>
-          <Corusel />
-        </Suspense>
-      </ScrollReveal>
-
-      <ScrollReveal variant="blurIn" delay={0.1}>
-        <Filtercorusel />
-      </ScrollReveal>
+      {/* Categories / Trending Section */}
+      {corusel}
 
       <Story />
+
+      {filterCorusel}
+
       <HomeFooter />
     </>
   );

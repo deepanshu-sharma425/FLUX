@@ -10,13 +10,23 @@ export async function createOrder(formData) {
   const token = cookieStore.get(TOKEN_NAME)?.value;
   const payload = token ? verifyAuthToken(token) : null;
 
-  if (!payload) return { error: "Unauthorized" };
+  if (!payload) {
+    return { error: "Unauthorized" };
+  }
 
   const addressId = formData.get("addressId");
   const paymentMode = formData.get("paymentMode");
 
-  if (!addressId) return { error: "Please select an address" };
-  if (!paymentMode) return { error: "Please select a payment mode" };
+  console.log("Creating order with addressId:", addressId, "paymentMode:", paymentMode);
+
+  if (!addressId || !paymentMode) {
+    return { error: "Address and Payment Mode are required" };
+  }
+
+  const parsedAddressId = parseInt(addressId);
+  if (isNaN(parsedAddressId)) {
+    return { error: "Invalid address ID" };
+  }
 
   try {
     // 1. Get cart items
@@ -25,19 +35,31 @@ export async function createOrder(formData) {
       include: { cloth: true },
     });
 
-    if (cartItems.length === 0) return { error: "Cart is empty" };
+    if (cartItems.length === 0) {
+      return { error: "Cart is empty" };
+    }
 
+    // Check if address exists and belongs to the user
+    const address = await prisma.address.findUnique({
+      where: { id: parsedAddressId, userId: payload.userId },
+    });
+
+    if (!address) {
+      return { error: "Invalid address" };
+    }
+
+    // 2. Calculate total amount
     const totalAmount = cartItems.reduce(
       (sum, item) => sum + item.quantity * item.cloth.finalPrice,
       0
     );
 
-    // 2. Create Order in a transaction
+    // 3. Create order and order items in a transaction
     const order = await prisma.$transaction(async (tx) => {
       const newOrder = await tx.order.create({
         data: {
           userId: payload.userId,
-          addressId: parseInt(addressId),
+          addressId: parsedAddressId,
           totalAmount,
           status: "PENDING",
           paymentMode: paymentMode,
@@ -47,13 +69,13 @@ export async function createOrder(formData) {
               quantity: item.quantity,
               price: item.cloth.finalPrice,
               size: item.size,
-              color: item.color || item.cloth.color,
+              color: item.color,
             })),
           },
         },
       });
 
-      // 3. Clear cart
+      // 4. Clear cart
       await tx.cartItem.deleteMany({
         where: { userId: payload.userId },
       });
@@ -62,51 +84,39 @@ export async function createOrder(formData) {
     });
 
     revalidatePath("/Cart");
-    revalidatePath("/Account");
+    revalidatePath("/Account/Orders");
     return { success: true, orderId: order.id };
   } catch (error) {
-    console.error("Order creation error:", error);
-    return { error: "Failed to place order. Please try again." };
+    console.error("Error creating order detailed:", error);
+    return { error: `Failed to place order: ${error.message || 'Unknown error'}` };
   }
 }
 
-export async function getAllOrders() {
+export async function getUserOrders() {
   const cookieStore = await cookies();
   const token = cookieStore.get(TOKEN_NAME)?.value;
   const payload = token ? verifyAuthToken(token) : null;
 
-  if (!payload || !payload.isAdmin) return { error: "Unauthorized" };
+  if (!payload) {
+    return [];
+  }
 
   try {
     const orders = await prisma.order.findMany({
+      where: { userId: payload.userId },
       include: {
-        user: { select: { name: true, email: true } },
+        items: {
+          include: {
+            cloth: true,
+          },
+        },
         address: true,
-        items: { include: { cloth: true } },
       },
       orderBy: { createdAt: "desc" },
     });
-    return { success: true, orders };
+    return orders;
   } catch (error) {
-    return { error: "Failed to fetch orders" };
-  }
-}
-
-export async function updateOrderStatus(orderId, status) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(TOKEN_NAME)?.value;
-  const payload = token ? verifyAuthToken(token) : null;
-
-  if (!payload || !payload.isAdmin) return { error: "Unauthorized" };
-
-  try {
-    await prisma.order.update({
-      where: { id: orderId },
-      data: { status },
-    });
-    revalidatePath("/admin/dashboard");
-    return { success: true };
-  } catch (error) {
-    return { error: "Failed to update order status" };
+    console.error("Error fetching orders:", error);
+    return [];
   }
 }
