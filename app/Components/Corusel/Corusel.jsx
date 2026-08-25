@@ -1,17 +1,27 @@
 import { prisma } from "../../../lib/prisma";
 import React from "react";
 import CoruselClient from "./CoruselClient";
-const Corusel = async () => {
-  const products = await prisma.cloth.findMany();
-  const serializableProducts = products.map(product => ({
-    ...product,
-    createdAt: product.createdAt.toISOString(),
-    updatedAt: product.updatedAt.toISOString(),
-  }));
+import productsFallback from "../Asset";
 
-  return(
-    <>
-     <CoruselClient products={serializableProducts} />
-    </>) 
-}
+const Corusel = async () => {
+  let products = [];
+  try {
+    const dbProducts = await prisma.cloth.findMany();
+    if (dbProducts && dbProducts.length > 0) {
+      products = dbProducts.map((product) => ({
+        ...product,
+        createdAt: product.createdAt?.toISOString?.() || new Date().toISOString(),
+        updatedAt: product.updatedAt?.toISOString?.() || new Date().toISOString(),
+      }));
+    } else {
+      products = productsFallback;
+    }
+  } catch (error) {
+    console.error("Database query failed in Corusel, using fallback:", error.message);
+    products = productsFallback;
+  }
+
+  return <CoruselClient products={products} />;
+};
+
 export default Corusel;
