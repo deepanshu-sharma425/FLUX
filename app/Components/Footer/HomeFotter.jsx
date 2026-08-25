@@ -163,7 +163,8 @@ const HomeFooter = () => {
                   </button>
                 ))}
               </div>
-            </StaggerItem>
+            </div>
+          </div>
 
           {/* Bottom bar */}
           <div className="border-t border-white/10 mt-12 sm:mt-16 pt-5 flex flex-col sm:flex-row justify-between gap-2 text-[10px] text-gray-600 font-bold uppercase tracking-widest">

@@ -19,6 +19,7 @@ const Navbar = () => {
   const [authUser, setAuthUser] = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
 
   // Lock scroll when menu open
@@ -97,14 +98,21 @@ const Navbar = () => {
 
   return (
     <>
-      <nav
-        className="
+      <motion.nav
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+        className={`
           fixed top-0 left-0 z-50 w-full
           flex items-center justify-between
           px-4 sm:px-6 md:px-12
           py-3 sm:py-4 md:py-6
-          bg-[#f6ecdf]/80 backdrop-blur-md border-b border-black/5
-        "
+          transition-all duration-500
+          ${scrolled
+            ? "bg-[#f6ecdf]/70 backdrop-blur-xl shadow-lg border-b border-black/5"
+            : "bg-[#f6ecdf]/80 backdrop-blur-md border-b border-black/5"
+          }
+        `}
       >
         <Link href={'/'}><h2 className="font-extrabold text-xl sm:text-2xl md:text-3xl tracking-tighter">
           FLUX

@@ -6,6 +6,7 @@ import Story from "./Story";
 import { motion } from "framer-motion";
 import HomeFooter from "./Footer/HomeFotter";
 import Link from "next/link";
+import ScrollReveal from "./ScrollReveal";
 
 const Homepage = ({ corusel, filterCorusel }) => {
   return (
@@ -41,11 +42,17 @@ const Homepage = ({ corusel, filterCorusel }) => {
               className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.1)]"
             />
             
-            {/* Floating Badges - Visible on sm and up */}
+            {/* Floating Glass Badge */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[15%] -left-2 sm:left-10 bg-white/90 backdrop-blur-md p-3 sm:p-4 rounded-2xl sm:rounded-3xl shadow-xl border border-white/50 z-20"
+              className="absolute top-[15%] -left-2 sm:left-10 p-3 sm:p-4 rounded-2xl sm:rounded-3xl shadow-xl z-20"
+              style={{
+                backdropFilter: "blur(20px) saturate(200%)",
+                WebkitBackdropFilter: "blur(20px) saturate(200%)",
+                background: "rgba(255, 255, 255, 0.7)",
+                border: "1px solid rgba(255, 255, 255, 0.5)",
+              }}
             >
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-500 rounded-xl sm:rounded-2xl flex items-center justify-center text-white">
@@ -53,7 +60,7 @@ const Homepage = ({ corusel, filterCorusel }) => {
                 </div>
                 <div>
                   <p className="text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-gray-400">New Drop</p>
-                  <p className="text-xs sm:text-sm font-bold tracking-tight text-black">Winter '26</p>
+                  <p className="text-xs sm:text-sm font-bold tracking-tight text-black">Winter &apos;26</p>
                 </div>
               </div>
             </motion.div>
@@ -94,7 +101,15 @@ const Homepage = ({ corusel, filterCorusel }) => {
                 <div className="absolute inset-0 bg-orange-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               </Link>
               
-              <Link href="/AllCloth" className="w-full sm:w-auto group px-8 sm:px-10 py-4 sm:py-5 bg-white text-black border-2 border-black/5 rounded-2xl sm:rounded-[24px] flex items-center justify-center gap-3 font-black text-[10px] sm:text-xs uppercase tracking-widest hover:border-black transition-all">
+              <Link
+                href="/AllCloth"
+                className="w-full sm:w-auto group px-8 sm:px-10 py-4 sm:py-5 text-black border-2 border-black/5 rounded-2xl sm:rounded-[24px] flex items-center justify-center gap-3 font-black text-[10px] sm:text-xs uppercase tracking-widest hover:border-black transition-all"
+                style={{
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  background: "rgba(255, 255, 255, 0.6)",
+                }}
+              >
                 View Lookbook
                 <ShoppingBag className="w-4 h-4" />
               </Link>
@@ -113,12 +128,16 @@ const Homepage = ({ corusel, filterCorusel }) => {
         </motion.div>
       </section>
 
-      {/* Categories / Trending Section */}
-      {corusel}
+      {/* Carousel with scroll reveal */}
+      <ScrollReveal variant="fadeUp" delay={0.1}>
+        {corusel}
+      </ScrollReveal>
 
       <Story />
 
-      {filterCorusel}
+      <ScrollReveal variant="blurIn" delay={0.1}>
+        {filterCorusel}
+      </ScrollReveal>
 
       <HomeFooter />
     </>
