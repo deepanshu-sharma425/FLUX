@@ -8,11 +8,16 @@ export default function GlassCursor() {
   const cursorY = useMotionValue(-100);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(true);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
+  // Declare all hooks unconditionally at top level
   const springConfig = { damping: 25, stiffness: 350, mass: 0.5 };
   const x = useSpring(cursorX, springConfig);
   const y = useSpring(cursorY, springConfig);
+
+  const dotSpringConfig = { damping: 35, stiffness: 500, mass: 0.3 };
+  const dotX = useSpring(cursorX, dotSpringConfig);
+  const dotY = useSpring(cursorY, dotSpringConfig);
 
   useEffect(() => {
     // Detect touch device
@@ -43,11 +48,9 @@ export default function GlassCursor() {
       return interactiveElements;
     };
 
-    // Initial setup + MutationObserver for dynamically added elements
     let elements = addHoverListeners();
 
     const observer = new MutationObserver(() => {
-      // Clean up old listeners
       elements.forEach((el) => {
         el.removeEventListener("mouseenter", handleMouseEnter);
         el.removeEventListener("mouseleave", handleMouseLeave);
@@ -67,7 +70,7 @@ export default function GlassCursor() {
     };
   }, [cursorX, cursorY, isVisible]);
 
-  // Don't render on touch devices
+  // Return null only after all hooks have been invoked
   if (isTouchDevice) return null;
 
   return (
@@ -105,8 +108,8 @@ export default function GlassCursor() {
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{
-          x: useSpring(cursorX, { damping: 35, stiffness: 500, mass: 0.3 }),
-          y: useSpring(cursorY, { damping: 35, stiffness: 500, mass: 0.3 }),
+          x: dotX,
+          y: dotY,
         }}
         animate={{
           width: isHovering ? 56 : 40,
