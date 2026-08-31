@@ -34,8 +34,7 @@ const WishlistPage = () => {
   return (
     <>
       <Navbar />
-      <div className="h-24" />
-      <section className="min-h-screen bg-[#f6ecdf] px-4 sm:px-6 pt-[96px] pb-40">
+      <section className="min-h-screen bg-[#f6ecdf] px-4 sm:px-6 pt-20 sm:pt-24 pb-20 sm:pb-40">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 sm:mb-12">
             <h1 className="text-4xl sm:text-5xl font-black tracking-tighter uppercase leading-none">

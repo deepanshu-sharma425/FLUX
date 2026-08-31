@@ -26,7 +26,7 @@ export default async function ProductPage({ params }) {
     <>
       <Navbar />
 
-      <div className="h-24" />
+      <div className="pt-20 sm:pt-24" />
       <ProductClient product={product} />
     </>
   );

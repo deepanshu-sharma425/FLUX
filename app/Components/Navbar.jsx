@@ -146,7 +146,7 @@ const Navbar = () => {
           </button>
         </form>
 
-        <div className="flex items-center gap-3 sm:gap-5">
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-5">
           <Link href="/wishlist" className="relative group">
             <Heart className="w-5 h-5 sm:w-6 sm:h-6 cursor-pointer group-hover:scale-110 transition-transform" />
             {wishlistCount > 0 && (
@@ -163,8 +163,10 @@ const Navbar = () => {
               </span>
             )}
           </Link>
+
+          {/* Auth icon – visible on ALL screen sizes */}
           {authUser ? (
-            <div className="hidden md:flex items-center gap-4">
+            <>
               <Link href="/Account" className="flex items-center gap-2 group">
                 <div className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
                   <User2 className="w-4 h-4 cursor-pointer" />
@@ -173,19 +175,25 @@ const Navbar = () => {
                   {authUser.name?.split(' ')[0] || 'Account'}
                 </span>
               </Link>
-              <button onClick={handleLogout} className="text-gray-400 hover:text-red-500 transition-colors">
+              <button
+                onClick={handleLogout}
+                className="hidden md:flex text-gray-400 hover:text-red-500 transition-colors"
+              >
                 <LogOut className="w-5 h-5" />
               </button>
-            </div>
+            </>
           ) : (
-            <Link href="/Components/login" className="hidden md:flex w-8 h-8 rounded-full bg-black/5 items-center justify-center hover:bg-black hover:text-white transition-colors">
+            <Link
+              href="/Components/login"
+              className="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center hover:bg-black hover:text-white transition-colors"
+            >
               <User2 className="w-4 h-4 cursor-pointer" />
             </Link>
           )}
 
           {/* Hamburger – mobile only */}
           <button
-            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-black/5 hover:bg-black hover:text-white transition-colors"
+            className="md:hidden w-9 h-9 flex items-center justify-center rounded-full bg-black/5 hover:bg-black hover:text-white transition-colors"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
           >

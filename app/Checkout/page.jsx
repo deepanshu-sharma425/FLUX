@@ -56,8 +56,7 @@ export default function CheckoutPage() {
   return (
     <>
       <Navbar />
-      <div className="h-24" />
-      <section className="min-h-screen bg-[#f6ecdf] px-6 pt-10 pb-20">
+      <section className="min-h-screen bg-[#f6ecdf] px-4 sm:px-6 pt-20 sm:pt-24 pb-20">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-4 mb-8">
             <Link

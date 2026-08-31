@@ -9,8 +9,7 @@ export default function OrderSuccessPage() {
   return (
     <>
       <Navbar />
-      <div className="h-24" />
-      <section className="min-h-screen bg-[#f6ecdf] px-6 flex items-center justify-center">
+      <section className="min-h-screen bg-[#f6ecdf] px-6 pt-20 sm:pt-24 flex items-center justify-center">
         <div className="max-w-md w-full bg-[#f2efe9] p-10 rounded-[40px] shadow-sm text-center">
           <div className="flex justify-center mb-6">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">

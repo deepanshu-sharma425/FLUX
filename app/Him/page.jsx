@@ -30,8 +30,7 @@ export default async function Him() {
   return (
     <>
       <Navbar />
-      <div className="h-24" />
-      <section className="min-h-screen bg-[#f6ecdf] px-6 pt-[96px] pb-40">
+      <section className="min-h-screen bg-[#f6ecdf] px-4 sm:px-6 pt-20 sm:pt-24 pb-20 sm:pb-40">
         <AllClothClient products={products} title="FOR HIM" />
       </section>
     </>

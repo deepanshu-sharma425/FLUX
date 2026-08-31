@@ -50,8 +50,7 @@ export default async function SearchPage({ searchParams }) {
   return (
     <>
       <Navbar />
-      <div className="h-24" />
-      <section className="min-h-screen bg-[#f6ecdf] px-6 pt-[96px] pb-20">
+      <section className="min-h-screen bg-[#f6ecdf] px-4 sm:px-6 pt-20 sm:pt-24 pb-20">
         <div className="max-w-7xl mx-auto">
           <div className="mb-6">
             <h1 className="text-3xl font-extrabold tracking-wide">

@@ -16,8 +16,7 @@ export default async function CartPage() {
     return (
       <>
         <Navbar />
-        <div className="h-24" />
-        <section className="min-h-screen bg-[#f6ecdf] px-6 pt-[96px] pb-20">
+        <section className="min-h-screen bg-[#f6ecdf] px-4 sm:px-6 pt-20 sm:pt-24 pb-20">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-3xl font-extrabold tracking-wide mb-4">
               Your cart is empty
@@ -56,8 +55,7 @@ export default async function CartPage() {
   return (
     <>
       <Navbar />
-      <div className="h-24" />
-      <section className="min-h-screen bg-[#f6ecdf] px-4 sm:px-6 pt-[96px] pb-20">
+      <section className="min-h-screen bg-[#f6ecdf] px-4 sm:px-6 pt-20 sm:pt-24 pb-20">
         <div className="max-w-5xl mx-auto">
           <div className="mb-8 sm:mb-12">
             <h1 className="text-4xl sm:text-5xl font-black tracking-tighter uppercase leading-none">
